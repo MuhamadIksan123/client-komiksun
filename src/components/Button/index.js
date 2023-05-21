@@ -1,5 +1,28 @@
-import React from "react";
+import React from 'react';
+import { Button } from 'react-bootstrap';
 
-export default function Button({ onClick, children }) {
-  return <button onClick={onClick}>{children}</button>;
+function KButton({
+  children,
+  action,
+  variant,
+  size,
+  loading,
+  disabled,
+  className,
+}) {
+  return (
+    <>
+      <Button
+        className={className}
+        onClick={action}
+        variant={variant}
+        size={size}
+        disabled={disabled}
+      >
+        {loading ? 'Loading..' : children}
+      </Button>
+    </>
+  );
 }
+
+export default KButton;
