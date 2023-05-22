@@ -1,61 +1,65 @@
 import React, { useState } from 'react';
-import { Container, Form, Card } from 'react-bootstrap';
-import TextInputWithLabel from '../../components/TextInputWithLabel';
-import KButton from './../../components/Button';
+import { Container, Card } from 'react-bootstrap';
 import axios from 'axios';
 import KAlert from '../../components/Alert';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { config } from '../../configs';
+import SForm from './form';
 
 export default function PageSignin() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
+
+  const [alert, setAlert] = useState({
+    status: 'false',
+    message: '',
+    type: '',
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     try {
-      const res = await axios.post('http://localhost:9000/api/v1/cms/auth/signin', {
-        email: form.email,
-        password: form.password,
+      const res = await axios.post(`${config.api_v1_host}/cms/auth/signin`, form);
+
+      setAlert({ status: false });
+
+      localStorage.setItem('token', res.data.data.token);
+
+      setIsLoading(false);
+      navigate('/');
+      
+    } catch (err) {
+      setAlert({
+        status: true,
+        message: err?.response?.data?.msg ?? 'Internal Server Error',
+        type: 'danger',
       });
 
-      console.log(res)
-    } catch (err) {
-      console.log(err.response.data.msg)
+      setIsLoading(false);
     }
-    
-  }
+  };
+
+  const token = localStorage.getItem('token');
+  if (token) return <Navigate to="/" replace="true" />;
 
   return (
     <Container md={12}>
+      <div className="m-auto mt-3" style={{ width: '50%' }}>
+        {alert.status && <KAlert type={alert.type} message={alert.message} />}
+      </div>
       <Card style={{ width: '50%' }} className="m-auto mt-5">
-        <KAlert type="danger" message="test" />
         <Card.Body>
           <Card.Title>Card Title</Card.Title>
-          <Form>
-            <TextInputWithLabel
-              label="Email address"
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Enter email"
-            />
-            <TextInputWithLabel
-              label="Password"
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              placeholder="Password"
-            />
-            <KButton variant="secondary" action={handleSubmit}>
-              Submit
-            </KButton>
-          </Form>
+          <SForm form={form} handleChange={handleChange} handleSubmit={handleSubmit} isLoading={isLoading} />
         </Card.Body>
       </Card>
     </Container>
