@@ -4,11 +4,12 @@ import SBreadCrumb from '../../components/Breadcrumb';
 import SAlert from '../../components/Alert';
 import Form from './form';
 // import { postData } from '../../utils/fetch';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { config } from '../../configs';
 import axios from 'axios';
 
 function GenreCreate() {
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const [form, setForm] = useState({
     nama: '',
@@ -28,7 +29,11 @@ function GenreCreate() {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    const res = await axios.post(`${config.api_v1_host}/cms/genre`, form);
+    const res = await axios.post(`${config.api_v1_host}/cms/genre`, form, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
     if (res?.data?.data) {
       navigate('/genre');
       setIsLoading(false);
@@ -42,6 +47,7 @@ function GenreCreate() {
       });
     }
   };
+   if (!token) return <Navigate to="/signin" replace="true" />;
 
   return (
     <Container>
