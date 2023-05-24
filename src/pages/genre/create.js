@@ -3,14 +3,14 @@ import { Container } from 'react-bootstrap';
 import SBreadCrumb from '../../components/Breadcrumb';
 import SAlert from '../../components/Alert';
 import Form from './form';
-// import { postData } from '../../utils/fetch';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { config } from '../../configs';
-import axios from 'axios';
+import { postData } from '../../utils/fetch';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setNotif } from '../../redux/notif/actions';
 
 function GenreCreate() {
-  const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [form, setForm] = useState({
     nama: '',
   });
@@ -29,12 +29,15 @@ function GenreCreate() {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    const res = await axios.post(`${config.api_v1_host}/cms/genre`, form, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+    const res = await postData('/cms/genre', form);
     if (res?.data?.data) {
+      dispatch(
+        setNotif(
+          true,
+          'success',
+          `berhasil tambah genre ${res.data.data.nama}`
+        )
+      );
       navigate('/genre');
       setIsLoading(false);
     } else {
@@ -47,7 +50,6 @@ function GenreCreate() {
       });
     }
   };
-   if (!token) return <Navigate to="/signin" replace="true" />;
 
   return (
     <Container>

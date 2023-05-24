@@ -1,76 +1,103 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table, Spinner } from 'react-bootstrap';
-import { Navigate, useNavigate } from 'react-router-dom';
-import KButton from '../../components/Button';
-import KBreadcrumb from '../../components/Breadcrumb';
-import KNavbar from '../../components/Navbar';
-import { config } from '../../configs';
-import axios from 'axios';
+import { Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import KBreadCrumb from '../../components/Breadcrumb';
+import Button from '../../components/Button';
+import Table from '../../components/TableWithAction';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchGenre } from '../../redux/genre/actions';
+import KAlert from '../../components/Alert';
+import Swal from 'sweetalert2';
+import { deleteData } from '../../utils/fetch';
+import { setNotif } from '../../redux/notif/actions';
+import { accessGenre } from '../../const/access';
 
-export default function PageGenre() {
-  const token = localStorage.getItem('token');
+function Genre() {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  const notif = useSelector((state) => state.notif);
+  const genre = useSelector((state) => state.genre);
+  const [access, setAccess] = useState({
+    tambah: false,
+    hapus: false,
+    edit: false,
+  });
+
+  const checkAccess = () => {
+    let { role } = localStorage.getItem('auth')
+      ? JSON.parse(localStorage.getItem('auth'))
+      : {};
+    const access = { tambah: false, hapus: false, edit: false };
+    Object.keys(accessGenre).forEach(function (key, index) {
+      if (accessGenre[key].indexOf(role) >= 0) {
+        access[key] = true;
+      }
+    });
+    setAccess(access);
+  };
 
   useEffect(() => {
-    const getGenreAPI = async () => {
-      setIsLoading(true);
-      try {
-        const res = await axios.get(`${config.api_v1_host}/cms/genre`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setTimeout(() => {
-          setIsLoading(false);
-          setData(res.data.data);
-        }, 4000);
-      } catch (err) {
-        setIsLoading(false);
-        console.log(err);
-      }
-    };
-    getGenreAPI();
+    checkAccess();
   }, []);
 
-  if (!token) return <Navigate to="/signin" replace="true" />;
-  return (
-    <>
-      <KNavbar />
-      <Container className="mt-3">
-        <KBreadcrumb textSecound="Genre" />
-        <KButton variant="primary" action={() => navigate('/genre/create')}>Tambah Data</KButton>
+  useEffect(() => {
+    dispatch(fetchGenre());
+  }, [dispatch]);
 
-        <Table striped bordered hover variant="dark" className="mt-3">
-          <thead>
-            <tr>
-              <th>Nomor</th>
-              <th>Nama</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
-              <tr>
-                <td colSpan={data.length + 1} style={{ textAlign: 'center' }}>
-                  <div className="flex items-center justify-center">
-                    <Spinner animation="border" variant='primary' />
-                  </div>
-                </td>
-              </tr>
-            ) : (
-              data.map((data, index) => (
-                <tr key={index}>
-                  <td>{(index += 1)}</td>
-                  <td>{data.nama}</td>
-                  <td>Action</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </Table>
-      </Container>
-    </>
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: 'Apa kamu yakin?',
+      text: 'Anda tidak akan dapat mengembalikan ini!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iya, Hapus',
+      cancelButtonText: 'Batal',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await deleteData(`/cms/genre/${id}`);
+        dispatch(
+          setNotif(
+            true,
+            'success',
+            `berhasil hapus genre ${res.data.data.nama}`
+          )
+        );
+        dispatch(fetchGenre());
+      }
+    });
+  };
+
+  return (
+    <Container className="mt-3">
+      <KBreadCrumb textSecound={'Genre'} />
+
+      {access.tambah && (
+        <Button
+          className={'mb-3'}
+          action={() => navigate('/genre/create')}
+        >
+          Tambah
+        </Button>
+      )}
+
+      {notif.status && (
+        <KAlert type={notif.typeNotif} message={notif.message} />
+      )}
+
+      <Table
+        status={genre.status}
+        thead={['Nama', 'Aksi']}
+        data={genre.data}
+        tbody={['nama']}
+        editUrl={access.edit ? `/genre/edit` : null}
+        deleteAction={access.hapus ? (id) => handleDelete(id) : null}
+        withoutPagination
+      />
+    </Container>
   );
 }
+
+export default Genre;

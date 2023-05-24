@@ -5,12 +5,15 @@ import SAlert from '../../components/Alert';
 import Form from './form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getData, putData } from '../../utils/fetch';
+import { useDispatch } from 'react-redux';
+import { setNotif } from '../../redux/notif/actions';
 
 function GenreEdit() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { genreId } = useParams();
   const [form, setForm] = useState({
-    name: '',
+    nama: '',
   });
 
   const [alert, setAlert] = useState({
@@ -28,7 +31,7 @@ function GenreEdit() {
   const fetchOneGenre = async () => {
     const res = await getData(`/cms/genre/${genreId}`);
 
-    setForm({ ...form, name: res.data.data.name });
+    setForm({ ...form, nama: res.data.data.nama });
   };
 
   useEffect(() => {
@@ -40,6 +43,13 @@ function GenreEdit() {
     setIsLoading(true);
     const res = await putData(`/cms/genre/${genreId}`, form);
     if (res?.data?.data) {
+      dispatch(
+        setNotif(
+          true,
+          'success',
+          `berhasil ubah genre ${res.data.data.nama}`
+        )
+      );
       navigate('/genre');
       setIsLoading(false);
     } else {

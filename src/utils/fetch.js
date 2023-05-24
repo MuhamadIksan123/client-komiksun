@@ -22,11 +22,16 @@ export async function getData(url, params) {
 }
 
 export async function postData(url, payload, formData) {
+  console.log(config.api_host_dev);
+  console.log(url);
+  console.log(payload);
+  console.log(formData);
   try {
     const { token } = localStorage.getItem('auth')
       ? JSON.parse(localStorage.getItem('auth'))
       : {};
 
+    console.log(`${config.api_host_dev}${url}`);
     const res = await axios.post(`${config.api_host_dev}${url}`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,

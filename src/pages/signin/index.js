@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Container, Card } from 'react-bootstrap';
-import axios from 'axios';
 import KAlert from '../../components/Alert';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { config } from '../../configs';
+import { useNavigate } from 'react-router-dom';
 import SForm from './form';
+import {postData} from '../../utils/fetch';
+import {useDispatch} from 'react-redux';
+import {userLogin} from '../../redux/auth/actions';
+
 
 export default function PageSignin() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: '',
@@ -28,15 +31,11 @@ export default function PageSignin() {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.post(`${config.api_v1_host}/cms/auth/signin`, form);
+      const res = await postData('/cms/auth/signin', form);
 
-      setAlert({ status: false });
-
-      localStorage.setItem('token', res.data.data.token);
-
+      dispatch(userLogin(res.data.data.token, res.data.data.role))
       setIsLoading(false);
       navigate('/');
-      
     } catch (err) {
       setAlert({
         status: true,
@@ -48,9 +47,6 @@ export default function PageSignin() {
     }
   };
 
-  const token = localStorage.getItem('token');
-  if (token) return <Navigate to="/" replace="true" />;
-
   return (
     <Container md={12}>
       <div className="m-auto mt-3" style={{ width: '50%' }}>
@@ -58,7 +54,7 @@ export default function PageSignin() {
       </div>
       <Card style={{ width: '50%' }} className="m-auto mt-5">
         <Card.Body>
-          <Card.Title>Card Title</Card.Title>
+          <Card.Title className='text-center'>Login</Card.Title>
           <SForm form={form} handleChange={handleChange} handleSubmit={handleSubmit} isLoading={isLoading} />
         </Card.Body>
       </Card>

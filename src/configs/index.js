@@ -1,6 +1,6 @@
 const config = {
-    api_v1_host : process.env.REACT_APP_HOST_DEV
-}
+  api_host_dev: process.env.REACT_APP_HOST_DEV,
+  api_image: process.env.REACT_APP_HOST_IMAGE_DEV,
+};
 
-export {config}
-
+export { config };

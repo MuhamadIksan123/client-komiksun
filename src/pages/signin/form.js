@@ -24,7 +24,7 @@ export default function SForm({form, handleChange, handleSubmit, isLoading}) {
         placeholder="Password"
       />
       <KButton
-        variant="secondary"
+        variant="primary"
         action={handleSubmit}
         loading={isLoading}
         disabled={isLoading}

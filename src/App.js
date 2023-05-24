@@ -1,30 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-} from 'react-router-dom';
-import SigninPage from './pages/signin';
-import DashboardPage from './pages/dashboard';
-import GenrePage from './pages/genre';
-import GenreCreate from './pages/genre/create';
-import GenreEdit from './pages/genre/edit';
-
-
-
+import { BrowserRouter } from 'react-router-dom';
+import { listen } from './redux/listener';
+import { AppRoutes } from './routes';
 
 function App() {
+  useEffect(() => {
+    listen();
+  }, []);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<DashboardPage />} />
-        <Route path="/signin" element={<SigninPage />} />
-        <Route path="/genre" element={<GenrePage />} />
-        <Route path="/genre/create" element={<GenreCreate />} />
-        <Route path="/genre/edit/id" element={<GenreEdit />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </>
   );
 }
 

@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import SButton from '../../components/Button';
 import TextInputWithLabel from '../../components/TextInputWithLabel';
 
-export default function GenreForm({
+export default function CategoriesForm({
   handleSubmit,
   form,
   handleChange,
@@ -13,8 +13,8 @@ export default function GenreForm({
   return (
     <Form>
       <TextInputWithLabel
-        placeholder={'Masukan nama kategori'}
-        label={'Nama kategori'}
+        placeholder={'Masukan nama genre'}
+        label={'Nama genre'}
         name="nama"
         value={form.nama}
         type="text"
