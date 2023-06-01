@@ -30,16 +30,23 @@ export default function PageSignin() {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    try {
-      const res = await postData('/cms/auth/signin', form);
+    const res = await postData('/cms/auth/signin', form);
+    if(res?.data?.data) {
 
-      dispatch(userLogin(res.data.data.token, res.data.data.role))
+      dispatch(
+        userLogin(
+          res.data.data.token,
+          res.data.data.role,
+          res.data.data.refreshToken,
+          res.data.data.email
+        )
+      );
       setIsLoading(false);
       navigate('/');
-    } catch (err) {
+    } else {
       setAlert({
         status: true,
-        message: err?.response?.data?.msg ?? 'Internal Server Error',
+        message: res?.response?.data?.msg ?? 'Internal Server Error',
         type: 'danger',
       });
 

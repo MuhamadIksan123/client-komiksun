@@ -20,7 +20,7 @@ export const accessGenre = {
 };
 
 export const accessKomik = {
-  lihat: ['vendor'],
+  lihat: ['vendor', 'admin'],
   tambah: ['vendor'],
   edit: ['vendor'],
   hapus: ['vendor'],
@@ -32,7 +32,7 @@ export const accessChapter = {
   edit: ['vendor'],
   hapus: ['vendor'],
 };
-export const accessPayments = {
+export const accessPayment = {
   lihat: ['vendor'],
   tambah: ['vendor'],
   edit: ['vendor'],

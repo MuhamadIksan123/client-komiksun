@@ -9,11 +9,12 @@ import thunk from 'redux-thunk';
 import authReducer from './auth/reducer';
 import genreReducer from './genre/reducer';
 import notifReducer from './notif/reducer';
-// import talentsReducer from './talents/reducer';
-// import paymentsReducer from './payments/reducer';
-// import eventsReducer from './events/reducer';
-// import listsReducer from './lists/reducer';
-// import ordersReducer from './orders/reducer';
+import userReducer from './user/reducer';
+import komikReducer from './komik/reducer';
+import paymentReducer from './payment/reducer';
+import listsReducer from './lists/reducer';
+import chapterReducer from './chapter/reducer';
+import transaksiReducer from './transaksi/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -21,11 +22,12 @@ const rootReducers = combineReducers({
   auth: authReducer,
   genre: genreReducer,
   notif: notifReducer,
-  // talents: talentsReducer,
-  // payments: paymentsReducer,
-  // events: eventsReducer,
-  // lists: listsReducer,
-  // orders: ordersReducer,
+  user: userReducer,
+  komik: komikReducer,
+  payment: paymentReducer,
+  lists: listsReducer,
+  chapter: chapterReducer,
+  transaksi: transaksiReducer,
 });
 const store = createStore(
   rootReducers,

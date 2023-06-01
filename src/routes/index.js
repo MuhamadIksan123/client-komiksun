@@ -4,14 +4,13 @@ import GuestOnlyRoute from '../components/GuestOnlyRoute';
 
 import Login from '../pages/signin';
 import { HomeRoute } from './HomeRoutes';
-// import { TalentsRoute } from './TalentsRoute';
+import { UserRoute } from './UserRoutes';
 import { GenreRoute } from './GenreRoutes';
-// import { PaymentsRoute } from './PaymentsRoute';
+import { KomikRoute } from './KomikRoutes';
+import { ChapterRoute } from './ChapterRoutes';
+import { PaymentRoute } from './PaymentRoutes';
 import KNavbar from '../components/Navbar';
-// import { EventsRoute } from './EventsRoute';
-// import { OrdersRoute } from './OrdersRoute';
-// import { OrganizersRoute } from './OrganizersRoute';
-// import { ParticipantsRoute } from './ParticipantsRoute';
+import { TransaksiRoute } from './TransaksiRoutes';
 
 export function AppRoutes() {
   return (
@@ -35,12 +34,11 @@ export function AppRoutes() {
       >
         <Route path="dashboard/*" element={<HomeRoute />} />
         <Route path="genre/*" element={<GenreRoute />} />
-        {/* <Route path="talents/*" element={<TalentsRoute />} />
-        <Route path="payments/*" element={<PaymentsRoute />} />
-        <Route path="events/*" element={<EventsRoute />} />
-        <Route path="orders/*" element={<OrdersRoute />} />
-        <Route path="organizers/*" element={<OrganizersRoute />} />
-        <Route path="participants/*" element={<ParticipantsRoute />} /> */}
+        <Route path="user/*" element={<UserRoute />} />
+        <Route path="komik/*" element={<KomikRoute />} />
+        <Route path="chapter/*" element={<ChapterRoute />} />
+        <Route path="payment/*" element={<PaymentRoute />} />
+        <Route path="transaksi/*" element={<TransaksiRoute />} />
 
         <Route path="" element={<Navigate to="/dashboard" replace={true} />} />
       </Route>

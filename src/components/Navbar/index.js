@@ -8,7 +8,7 @@ import {
   accessGenre,
   accessKomik,
   accessChapter,
-  accessPayments,
+  accessPayment,
   accessTransaksi,
 } from '../../const/access';
 
@@ -74,18 +74,11 @@ function KNavbar() {
           </NavLink>
           <NavLink
             role={role}
-            roles={accessPayments.lihat}
-            action={() => navigate('/payments')}
+            roles={accessPayment.lihat}
+            action={() => navigate('/payment')}
           >
             Payment
           </NavLink>
-          {/* <NavLink
-            role={role}
-            roles={organizers.lihat}
-            action={() => navigate('/organizers')}
-          >
-            Oranizer
-          </NavLink> */}
           <NavLink
             role={role}
             roles={accessTransaksi.lihat}

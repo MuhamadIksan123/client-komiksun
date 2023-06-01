@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Image, Spinner } from 'react-bootstrap';
 import moment from 'moment';
 import { config } from '../../configs';
+import axios from 'axios';
 
 function TbodyWithAction({
   data,
@@ -15,6 +16,22 @@ function TbodyWithAction({
   status,
 }) {
   const navigate = useNavigate();
+  const handleDownload = (data) => {
+    console.log(data)
+    return ;
+    axios({
+      url: `${config.api_image}/${data}`,
+      method: 'GET',
+      responseType: 'blob', // Menentukan respons sebagai blob (binary large object)
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'file.pdf');
+      document.body.appendChild(link);
+      link.click();
+    });
+  };
   return (
     <tbody>
       {status === 'process' ? (
@@ -40,6 +57,10 @@ function TbodyWithAction({
                           roundedCircle
                           src={`${config.api_image}/${data[key]}`}
                         />
+                      ) : key === 'document' ? (
+                        <button onClick={handleDownload(data[key])}>
+                          Download PDF
+                        </button>
                       ) : key === 'date' ? (
                         moment(data[key]).format('DD-MM-YYYY, h:mm:ss a')
                       ) : (
