@@ -171,21 +171,6 @@ function UserCreate() {
     }
   };
 
-  const handleChangeKomik = (e, i) => {
-    console.log(e);
-    e = e[0];
-    console.log(e);
-
-    let _temp = [...form.komik];
-    _temp.push(e.target.value);
-
-    console.log(_temp);
-
-    setForm({ ...form, komik: _temp });
-  };
-
-  
-
   return (
     <Container>
       <BreadCrumb
@@ -200,7 +185,6 @@ function UserCreate() {
         lists={lists}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        handleChangeKomik={handleChangeKomik}
         rol={rol}
         stat={stat}
       />

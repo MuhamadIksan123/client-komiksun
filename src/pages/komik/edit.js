@@ -36,15 +36,16 @@ function KomikEdit() {
   const fetchOneKomik = async () => {
     const res = await getData(`/cms/komik/${komikId}`);
 
-    console.log(res);
-    return;
-
     setForm({
       ...form,
       judul: res.data.data.judul,
       penulis: res.data.data.penulis,
       sinopsis: res.data.data.sinopsis,
-      status: res.data.data.status,
+      status: {
+        label: res?.data?.data?.status,
+        target: { name: 'status', value: res?.data?.data?.status },
+        value: res?.data?.data?.status,
+      },
       price: res.data.data.price,
       genre: {
         label: res?.data?.data?.genre?.nama,
@@ -128,7 +129,7 @@ function KomikEdit() {
       judul: form.judul,
       penulis: form.penulis,
       sinopsis: form.sinopsis,
-      status: form.status,
+      status: form.status.value,
       price: form.price,
       genre: form.genre.value,
       image: form.file,

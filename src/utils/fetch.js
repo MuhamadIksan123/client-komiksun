@@ -36,7 +36,6 @@ export async function postData(url, payload, formData) {
 
     return res;
   } catch (err) {
-    console.log(err);
     return handleError(err);
   }
 }
@@ -55,7 +54,6 @@ export async function putData(url, payload) {
 
     return res;
   } catch (err) {
-    console.log(err);
     return handleError(err);
   }
 }

@@ -72,8 +72,6 @@ function UserCreate() {
   const fetchOneUser = async () => {
     const res = await getData(`/cms/user/${userId}`);
 
-    console.log(res);
-
     setForm({
       ...form,
       nama: res.data.data.nama,
@@ -92,20 +90,9 @@ function UserCreate() {
       },
       otp: res.data.data.otp,
       nomor: res.data.data.nomor,
-      komik: {
-        label: res?.data?.data?.komik?.label,
-        target: { name: 'komik', value: res?.data?.data?.komik.value },
-        value: res?.data?.data?.komik.value,
-      },
+      komik: res.data.data.komik,
       file: res.data.data.image._id,
       avatar: res.data.data.image.nama,
-
-      // keyPoint: res.data.data.keyPoint,
-      // category: {
-      //   label: res?.data?.data?.category?.name,
-      //   target: { name: 'category', value: res?.data?.data?.category?._id },
-      //   value: res?.data?.data?.category?._id,
-      // },
     });
   };
 
@@ -189,17 +176,17 @@ function UserCreate() {
       email: form.email,
       password: form.password,
       confirmPassword: form.confirmPassword,
-      role: form.role,
+      role: form.role.value,
       lahir: form.lahir,
-      status: form.status,
+      status: form.status.value,
       otp: form.otp,
       nomor: form.nomor,
-      komik: form.komik.map((i) => i.value),
+      komik: form.komik.map((i) => i),
       image: form.file,
     };
 
     const res = await putData(`/cms/user/${userId}`, payload);
-    if (res.data.data) {
+    if (res?.data?.data) {
       dispatch(
         setNotif(true, 'success', `berhasil ubah user ${res.data.data.nama}`)
       );
