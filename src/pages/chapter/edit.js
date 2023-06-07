@@ -2,41 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import BreadCrumb from '../../components/Breadcrumb';
 import Alert from '../../components/Alert';
+import Button from '../../components/Button';
 import Form from './form';
-import { getData, postData, putData } from '../../utils/fetch';
+import { getData, postData, putData, getBlob } from '../../utils/fetch';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotif } from '../../redux/notif/actions';
-import {
-  fetchListCategories,
-  fetchListTalents,
-} from '../../redux/lists/actions';
+import { fetchListKomiks } from '../../redux/lists/actions';
 import moment from 'moment';
 
-function EventsCreate() {
+function ChaptersCreate() {
   const navigate = useNavigate();
-  const { eventId } = useParams();
+  const { chapterId } = useParams();
   const dispatch = useDispatch();
   const lists = useSelector((state) => state.lists);
   const [form, setForm] = useState({
-    title: '',
-    date: '',
+    judul: '',
+    rilis: '',
+    komik: '',
     file: '',
-    avatar: '',
-    about: '',
-    venueName: '',
-    tagline: '',
-    keyPoint: [''],
-    tickets: [
-      {
-        type: '',
-        statusTicketCategories: '',
-        stock: '',
-        price: '',
-      },
-    ],
-    category: '',
-    talent: '',
+    document: '',
   });
 
   const [alert, setAlert] = useState({
@@ -47,57 +32,42 @@ function EventsCreate() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchOneEvent = async () => {
-    const res = await getData(`/cms/events/${eventId}`);
+  const fetchOneChapter = async () => {
+    const res = await getData(`/cms/chapter/${chapterId}`);
 
     setForm({
       ...form,
-      title: res.data.data.title,
-      date: moment(res.data.data.date).format('YYYY-MM-DDTHH:SS'),
-      file: res.data.data.image._id,
-      avatar: res.data.data.image.name,
-      about: res.data.data.about,
-      venueName: res.data.data.venueName,
-      tagline: res.data.data.tagline,
-      keyPoint: res.data.data.keyPoint,
-      category: {
-        label: res?.data?.data?.category?.name,
-        target: { name: 'category', value: res?.data?.data?.category?._id },
-        value: res?.data?.data?.category?._id,
+      judul: res.data.data.judul,
+      rilis: moment(res.data.data.rilis).format('YYYY-MM-DDTHH:SS'),
+      komik: {
+        label: res?.data?.data?.komik?.judul,
+        target: { name: 'komik', value: res?.data?.data?.komik?._id },
+        value: res?.data?.data?.komik?._id,
       },
-      talent: {
-        label: res?.data?.data?.talent?.name,
-        target: { name: 'talent', value: res?.data?.data?.talent?._id },
-        value: res?.data?.data?.talent?._id,
-      },
-      tickets: res.data.data.tickets,
+      file: res.data.data.file._id,
+      document: res.data.data.file.nama,
     });
   };
 
   useEffect(() => {
-    fetchOneEvent();
+    fetchOneChapter();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    dispatch(fetchListTalents());
-    dispatch(fetchListCategories());
+    dispatch(fetchListKomiks());
   }, [dispatch]);
 
-  const uploadImage = async (file) => {
+  const uploadFile = async (file) => {
     let formData = new FormData();
-    formData.append('avatar', file);
-    const res = await postData('/cms/images', formData, true);
+    formData.append('berkas', file);
+    const res = await postData('/cms/files', formData, true);
     return res;
   };
 
   const handleChange = async (e) => {
-    if (e.target.name === 'avatar') {
-      if (
-        e?.target?.files[0]?.type === 'image/jpg' ||
-        e?.target?.files[0]?.type === 'image/png' ||
-        e?.target?.files[0]?.type === 'image/jpeg'
-      ) {
+    if (e.target.name === 'document') {
+      if (e?.target?.files[0]?.type === 'application/pdf') {
         var size = parseFloat(e.target.files[0].size / 3145728).toFixed(2);
 
         if (size > 2) {
@@ -113,12 +83,12 @@ function EventsCreate() {
             [e.target.name]: '',
           });
         } else {
-          const res = await uploadImage(e.target.files[0]);
+          const res = await uploadFile(e.target.files[0]);
 
           setForm({
             ...form,
             file: res.data.data._id,
-            [e.target.name]: res.data.data.name,
+            [e.target.name]: res.data.data.nama,
           });
         }
       } else {
@@ -126,7 +96,7 @@ function EventsCreate() {
           ...alert,
           status: true,
           type: 'danger',
-          message: 'type image png | jpg | jpeg',
+          message: 'type file pdf',
         });
         setForm({
           ...form,
@@ -134,7 +104,7 @@ function EventsCreate() {
           [e.target.name]: '',
         });
       }
-    } else if (e.target.name === 'category' || e.target.name === 'talent') {
+    } else if (e.target.name === 'komik') {
       setForm({ ...form, [e.target.name]: e });
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
@@ -145,27 +115,23 @@ function EventsCreate() {
     setIsLoading(true);
 
     const payload = {
-      date: form.date,
-      image: form.file,
-      title: form.title,
-      price: form.price,
-      about: form.about,
-      venueName: form.venueName,
-      tagline: form.tagline,
-      keyPoint: form.keyPoint,
-      category: form.category.value,
-      talent: form.talent.value,
-      status: form.status,
-      tickets: form.tickets,
+      judul: form.judul,
+      rilis: form.rilis,
+      komik: form.komik.value,
+      file: form.file,
     };
 
-    const res = await putData(`/cms/events/${eventId}`, payload);
-    if (res.data.data) {
+    const res = await putData(`/cms/chapter/${chapterId}`, payload);
+    if (res?.data?.data) {
       dispatch(
-        setNotif(true, 'success', `berhasil ubah events ${res.data.data.title}`)
+        setNotif(
+          true,
+          'success',
+          `berhasil ubah judul ${res.data.data.judul}`
+        )
       );
 
-      navigate('/events');
+      navigate('/chapter');
       setIsLoading(false);
     } else {
       setIsLoading(false);
@@ -178,69 +144,15 @@ function EventsCreate() {
     }
   };
 
-  const handleChangeKeyPoint = (e, i) => {
-    let _temp = [...form.keyPoint];
-
-    _temp[i] = e.target.value;
-
-    setForm({ ...form, keyPoint: _temp });
-  };
-
-  const handlePlusKeyPoint = () => {
-    let _temp = [...form.keyPoint];
-    _temp.push('');
-
-    setForm({ ...form, keyPoint: _temp });
-  };
-
-  const handleMinusKeyPoint = (index) => {
-    let _temp = [...form.keyPoint];
-    let removeIndex = _temp
-      .map(function (_, i) {
-        return i;
-      })
-      .indexOf(index);
-
-    _temp.splice(removeIndex, 1);
-    setForm({ ...form, keyPoint: _temp });
-  };
-
-  const handlePlusTicket = () => {
-    let _temp = [...form.tickets];
-    _temp.push({
-      type: '',
-      statusTicketCategories: '',
-      stock: '',
-      price: '',
-    });
-
-    setForm({ ...form, tickets: _temp });
-  };
-  const handleMinusTicket = (index) => {
-    let _temp = [...form.tickets];
-    let removeIndex = _temp
-      .map(function (_, i) {
-        return i;
-      })
-      .indexOf(index);
-
-    _temp.splice(removeIndex, 1);
-    setForm({ ...form, tickets: _temp });
-  };
-
-  const handleChangeTicket = (e, i) => {
-    let _temp = [...form.tickets];
-
-    _temp[i][e.target.name] = e.target.value;
-
-    setForm({ ...form, tickets: _temp });
+  const handleDownload = (id) => {
+    getBlob(`/cms/files/${id}`);
   };
 
   return (
     <Container>
       <BreadCrumb
-        textSecound={'Events'}
-        urlSecound={'/events'}
+        textSecound={'Chapters'}
+        urlSecound={'/chapter'}
         textThird="Edit"
       />
       {alert.status && <Alert type={alert.type} message={alert.message} />}
@@ -250,16 +162,24 @@ function EventsCreate() {
         lists={lists}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        handleChangeKeyPoint={handleChangeKeyPoint}
-        handlePlusKeyPoint={handlePlusKeyPoint}
-        handleMinusKeyPoint={handleMinusKeyPoint}
-        handlePlusTicket={handlePlusTicket}
-        handleMinusTicket={handleMinusTicket}
-        handleChangeTicket={handleChangeTicket}
         edit
+        customAction={(id) => {
+          return (
+            <div className="d-grid gap-2">
+              <Button
+                className={'mb-2'}
+                variant="secondary"
+                size={'md'}
+                action={() => handleDownload(id)}
+              >
+                Check File PDF
+              </Button>
+            </div>
+          );
+        }}
       />
     </Container>
   );
 }
 
-export default EventsCreate;
+export default ChaptersCreate;

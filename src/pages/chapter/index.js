@@ -13,12 +13,13 @@ import {
 } from '../../redux/chapter/actions';
 import SAlert from '../../components/Alert';
 import Swal from 'sweetalert2';
-import { deleteData, putData } from '../../utils/fetch';
+import { deleteData, putData, 
+  getBlob 
+} from '../../utils/fetch';
 import { setNotif } from '../../redux/notif/actions';
 import SelectBox from '../../components/SelectBox';
 import { fetchListKomiks } from '../../redux/lists/actions';
 import { accessChapter } from '../../const/access';
-import { formatDate } from '../../utils/formatDate';
 
 function ChapterPage() {
   const navigate = useNavigate();
@@ -115,9 +116,9 @@ function ChapterPage() {
     });
   };
 
-  const displayDate = `${
-    chapter.rilis?.startDate ? formatDate(chapter.rilis?.startDate) : ''
-  }${chapter.rilis?.endDate ? ' - ' + formatDate(chapter.rilis.endDate) : ''}`;
+  const handleDownload = (id) => {
+    getBlob(`/cms/files/${id}`);
+  };
 
   return (
     <Container className="mt-3">
@@ -152,31 +153,20 @@ function ChapterPage() {
       )}
       <Table
         status={chapter.status}
-        thead={[
-          'Judul',
-          'Tanggal Rilis',
-          'File',
-          'Komik',
-          'Aksi',
-        ]}
+        thead={['Judul', 'Tanggal Rilis', 'File', 'Komik', 'Aksi']}
         data={chapter.data}
-        tbody={[
-          'judul',
-          'rilis',
-          'document',
-          'komikName',
-        ]}
+        tbody={['judul', 'komikName', 'document', 'tanggalRilis']}
         editUrl={access.edit ? `/chapter/edit` : null}
         deleteAction={access.hapus ? (id) => handleDelete(id) : null}
-        customAction={(id, status = '') => {
+        customAction={(id) => {
           return (
             <Button
               className={'mx-2'}
-              variant="primary"
+              variant="secondary"
               size={'sm'}
-              action={() => handleChangeStatus(id, status)}
+              action={() => handleDownload(id)}
             >
-              Change Status
+              Download PDF
             </Button>
           );
         }}

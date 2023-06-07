@@ -7,9 +7,7 @@ import { postData } from '../../utils/fetch';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotif } from '../../redux/notif/actions';
-import {
-  fetchListKomiks,
-} from '../../redux/lists/actions';
+import { fetchListKomiks } from '../../redux/lists/actions';
 
 function ChapterCreate() {
   const navigate = useNavigate();
@@ -17,7 +15,7 @@ function ChapterCreate() {
   const lists = useSelector((state) => state.lists);
   const [form, setForm] = useState({
     judul: '',
-    rilis: new Date(),
+    rilis: '',
     komik: '',
     file: '',
     document: '',
@@ -37,7 +35,7 @@ function ChapterCreate() {
 
   const uploadFile = async (file) => {
     let formData = new FormData();
-    formData.append('document', file);
+    formData.append('berkas', file);
     const res = await postData('/cms/files', formData, true);
     return res;
   };
@@ -61,7 +59,6 @@ function ChapterCreate() {
           });
         } else {
           const res = await uploadFile(e.target.files[0]);
-
           setForm({
             ...form,
             file: res.data.data._id,
@@ -81,7 +78,7 @@ function ChapterCreate() {
           [e.target.name]: '',
         });
       }
-    } else if (e.target.nama === 'komik') {
+    } else if (e.target.name === 'komik') {
       setForm({ ...form, [e.target.name]: e });
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
@@ -94,7 +91,7 @@ function ChapterCreate() {
     const payload = {
       judul: form.judul,
       rilis: form.rilis,
-      komik: form.komik,
+      komik: form.komik.value,
       file: form.file,
     };
 
@@ -120,8 +117,6 @@ function ChapterCreate() {
       });
     }
   };
-
-  
 
   return (
     <Container>

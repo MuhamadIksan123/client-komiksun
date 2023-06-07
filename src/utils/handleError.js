@@ -3,7 +3,7 @@ import { config } from '../configs';
 
 const handleError = (error) => {
   const originalRequest = error.config;
-  if (error.response.data.msg === 'jwt expired') {
+  if (error?.response?.data?.msg === 'jwt expired') {
     originalRequest._retry = true;
     const session = localStorage.getItem('auth')
       ? JSON.parse(localStorage.getItem('auth'))
@@ -21,8 +21,6 @@ const handleError = (error) => {
         );
         originalRequest.headers.Authorization = `Bearer ${res.data.data.token}`;
 
-        console.log('originalRequest');
-        console.log(originalRequest);
 
         return axios(originalRequest);
       })

@@ -1,22 +1,17 @@
 import React from 'react';
-import {
-  Col,
-  Figure,
-  Form,
-  Row,
-} from 'react-bootstrap';
+import { Col, Form, Row } from 'react-bootstrap';
 import Button from '../../components/Button';
 import TextInputWithLabel from '../../components/TextInputWithLabel';
 import SelectBox from '../../components/SelectBox';
-import { config } from '../../configs';
 
-export default function EventsForm({
+export default function ChapterForm({
   handleSubmit,
   form,
   handleChange,
   isLoading,
   edit,
   lists,
+  customAction,
 }) {
   return (
     <Form className="mb-2">
@@ -34,7 +29,7 @@ export default function EventsForm({
         <Col>
           <SelectBox
             label={'Komik'}
-            placeholder={'Masukan komik'}
+            placeholder={'Pilih komik'}
             name="komik"
             value={form.komik}
             options={lists.komiks}
@@ -55,21 +50,19 @@ export default function EventsForm({
             onChange={handleChange}
           />
           {form.document !== '' && (
-            <div>
-              <Figure>
-                <Figure.File
-                  width={171}
-                  height={180}
-                  alt="171x180"
-                  src={`${config.api_image}/${form.document}`}
-                />
-
-                <Figure.Caption>Perview image cover</Figure.Caption>
-              </Figure>
-            </div>
+            <>{customAction && customAction(form.file)}</>
           )}
         </Col>
-        <Col></Col>
+        <Col>
+          <TextInputWithLabel
+            placeholder={'Masukan tanggal rilis'}
+            label={'Tanggal Rilis'}
+            name="rilis"
+            value={form.rilis}
+            type="datetime-local"
+            onChange={handleChange}
+          />
+        </Col>
       </Row>
 
       <Button variant="primary" action={handleSubmit} loading={isLoading}>
