@@ -5,7 +5,6 @@ import {
   SET_KEYWORD,
   SET_KOMIK,
 } from './constants';
-import moment from 'moment';
 
 import { getData } from '../../utils/fetch';
 import debounce from 'debounce-promise';
@@ -49,9 +48,10 @@ export const fetchChapter = () => {
       let res = await debouncedFetchChapter('/cms/chapter', params);
 
       res.data.data.forEach((res) => {
+        res.status = res.statusChapter;
         res.komikName = res?.komik?.judul ?? '';
         res.document = res?.file?.nama ?? '-';
-        res.tanggalRilis = moment(res.rilis).format('DD-MM-YYYY HH:SS');
+        res.date = res.rilis;
       });
 
       dispatch(

@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotif } from '../../redux/notif/actions';
 import { fetchListGenres } from '../../redux/lists/actions';
+import moment from 'moment';
 
 function KomikEdit() {
   const { komikId } = useParams();
@@ -20,6 +21,8 @@ function KomikEdit() {
     sinopsis: '',
     status: '',
     price: 0,
+    jenis: '',
+    rilis: '',
     genre: '',
     file: '',
     avatar: '',
@@ -30,6 +33,47 @@ function KomikEdit() {
     type: '',
     message: '',
   });
+
+  let stat = [
+    {
+      value: 'Ongoing',
+      label: 'Ongoing',
+      target: { value: 'Ongoing', name: 'status' },
+    },
+    {
+      value: 'Tamat',
+      label: 'Tamat',
+      target: { value: 'Tamat', name: 'status' },
+    },
+  ];
+
+  let jenisKomik = [
+    {
+      value: 'Manga',
+      label: 'Manga',
+      target: { value: 'Manga', name: 'jenis' },
+    },
+    {
+      value: 'Manhwa',
+      label: 'Manhwa',
+      target: { value: 'Manhwa', name: 'jenis' },
+    },
+    {
+      value: 'Manhua',
+      label: 'Manhua',
+      target: { value: 'Manhua', name: 'jenis' },
+    },
+    {
+      value: 'Webtoon',
+      label: 'Webtoon',
+      target: { value: 'Webtoon', name: 'jenis' },
+    },
+    {
+      value: 'Komik Indo',
+      label: 'Komik Indo',
+      target: { value: 'Komik Indo', name: 'jenis' },
+    },
+  ];
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -47,6 +91,12 @@ function KomikEdit() {
         value: res?.data?.data?.status,
       },
       price: res.data.data.price,
+      jenis: {
+        label: res?.data?.data?.jenis,
+        target: { name: 'jenis', value: res?.data?.data?.jenis },
+        value: res?.data?.data?.jenis,
+      },
+      rilis: moment(res.data.data.rilis).format('YYYY-MM-DDTHH:SS'),
       genre: {
         label: res?.data?.data?.genre?.nama,
         target: { name: 'genre', value: res?.data?.data?.genre?._id },
@@ -116,7 +166,11 @@ function KomikEdit() {
           [e.target.name]: '',
         });
       }
-    } else if (e.target.name === 'genre') {
+    } else if (
+      e.target.name === 'genre' ||
+      e.target.name === 'status' ||
+      e.target.name === 'jenis'
+    ) {
       setForm({ ...form, [e.target.name]: e });
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
@@ -131,6 +185,8 @@ function KomikEdit() {
       sinopsis: form.sinopsis,
       status: form.status.value,
       price: form.price,
+      jenis: form.jenis.value,
+      rilis: form.rilis,
       genre: form.genre.value,
       image: form.file,
     };
@@ -166,6 +222,8 @@ function KomikEdit() {
         lists={lists}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        stat={stat}
+        jenisKomik={jenisKomik}
         edit
       />
     </Container>

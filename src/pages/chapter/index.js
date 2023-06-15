@@ -100,7 +100,7 @@ function ChapterPage() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const payload = {
-          statusChapter: status === 'Published' ? 'Draft' : 'Published',
+          statusChapter: status === 'Tolak Publikasi' ? 'Publikasi' : 'Tolak Publikasi',
         };
         const res = await putData(`/cms/chapter/${id}/status`, payload);
 
@@ -153,12 +153,12 @@ function ChapterPage() {
       )}
       <Table
         status={chapter.status}
-        thead={['Judul', 'Tanggal Rilis', 'File', 'Komik', 'Aksi']}
+        thead={['Judul', 'Status', 'Komik', 'File', 'Tanggal Rilis', 'Aksi']}
+        tbody={['judul', 'status', 'komikName', 'document', 'date']}
         data={chapter.data}
-        tbody={['judul', 'komikName', 'document', 'tanggalRilis']}
         editUrl={access.edit ? `/chapter/edit` : null}
         deleteAction={access.hapus ? (id) => handleDelete(id) : null}
-        customAction={(id) => {
+        downloadAction={(id) => {
           return (
             <Button
               className={'mx-2'}
@@ -170,6 +170,18 @@ function ChapterPage() {
             </Button>
           );
         }}
+        customAction={access.status ? (id, status = '') => {
+          return (
+            <Button
+              className={'mx-2'}
+              variant="primary"
+              size={'sm'}
+              action={() => handleChangeStatus(id, status)}
+            >
+              Change Status
+            </Button>
+          );
+        } : null}
         withoutPagination
       />
     </Container>

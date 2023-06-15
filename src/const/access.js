@@ -31,6 +31,7 @@ export const accessChapter = {
   tambah: ['vendor'],
   edit: ['vendor'],
   hapus: ['vendor'],
+  status: ['admin'],
 };
 export const accessPayment = {
   lihat: ['vendor'],

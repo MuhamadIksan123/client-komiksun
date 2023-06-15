@@ -49,10 +49,9 @@ export const fetchKomik = () => {
 
       res.data.data.forEach((res) => {
         res.genreName = res?.genre?.nama ?? '';
+        res.harga = res.price === 0 ? 'free' : res.price;
+        res.date = res.rilis;
         res.avatar = res?.image?.nama ?? '-';
-        if (res.price === 0) {
-          res.price = 'free';
-        }
       });
 
       dispatch(

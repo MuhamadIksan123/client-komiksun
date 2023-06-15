@@ -13,6 +13,7 @@ export default function KomikForm({
   edit,
   lists,
   stat,
+  jenisKomik
 }) {
   return (
     <Form className="mb-2">
@@ -80,6 +81,29 @@ export default function KomikForm({
             name="price"
             value={form.price}
             type="number"
+            onChange={handleChange}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <SelectBox
+            label={'Jenis Komik'}
+            placeholder={'Pilih jenis komik'}
+            name="jenis"
+            value={form.jenis}
+            options={jenisKomik}
+            isClearable={true}
+            handleChange={(e) => handleChange(e)}
+          />
+        </Col>
+        <Col>
+          <TextInputWithLabel
+            placeholder={'Masukan tanggal rilis'}
+            label={'Tanggal Rilis'}
+            name="rilis"
+            value={form.rilis}
+            type="datetime-local"
             onChange={handleChange}
           />
         </Col>

@@ -45,12 +45,12 @@ function ChapterCreate() {
       if (e?.target?.files[0]?.type === 'application/pdf') {
         var size = parseFloat(e.target.files[0].size / 3145728).toFixed(2);
 
-        if (size > 2) {
+        if (size > 30) {
           setAlert({
             ...alert,
             status: true,
             type: 'danger',
-            message: 'Please select image size less than 3 MB',
+            message: 'Please select image size less than 30 MB',
           });
           setForm({
             ...form,

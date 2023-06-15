@@ -16,6 +16,8 @@ function TableWithAction({
   customAction,
   status,
   pages,
+  downloadAction,
+  detailUrl,
 }) {
   return (
     <>
@@ -29,6 +31,8 @@ function TableWithAction({
           deleteAction={deleteAction}
           actionNotDisplay={actionNotDisplay}
           customAction={customAction}
+          downloadAction={downloadAction}
+          detail={detailUrl}
         />
       </Table>
       {!withoutPagination && data.length ? (

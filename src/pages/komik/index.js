@@ -60,7 +60,7 @@ function KomikPage() {
 
   const handleDelete = (id) => {
     Swal.fire({
-      judul: 'Apa kamu yakin?',
+      title: 'Apa kamu yakin?',
       text: 'Anda tidak akan dapat mengembalikan ini!',
       icon: 'warning',
       showCancelButton: true,
@@ -87,7 +87,7 @@ function KomikPage() {
 
   const handleChangeStatus = (id, status) => {
     Swal.fire({
-      judul: 'Apa kamu yakin?',
+      title: 'Apa kamu yakin?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -98,7 +98,7 @@ function KomikPage() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const payload = {
-          statusKomik: status === 'Published' ? 'Draft' : 'Published',
+          statusKomik: status === 'Tolak Publikasi' ? 'Publikasi' : 'Tolak Publikasi',
         };
         const res = await putData(`/cms/komik/${id}/status`, payload);
 
@@ -150,22 +150,21 @@ function KomikPage() {
         status={komik.status}
         thead={[
           'Judul',
-          'Penulis',
           'Status',
-          'Price',
           'Genre',
+          'Rilis',
           'Avatar',
           'Aksi',
         ]}
         data={komik.data}
         tbody={[
           'judul',
-          'penulis',
-          'status',
-          'price',
-          'avatar',
+          'statusKomik',
           'genreName',
+          'date',
+          'avatar',
         ]}
+        detailUrl={access.detail ? `/komik/detail` : null}
         editUrl={access.edit ? `/komik/edit` : null}
         deleteAction={access.hapus ? (id) => handleDelete(id) : null}
         customAction={(id, status = '') => {

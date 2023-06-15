@@ -18,6 +18,8 @@ function KomikCreate() {
     penulis: '',
     sinopsis: '',
     status: '',
+    jenis: '',
+    rilis: '',
     price: 0,
     genre: '',
     file: '',
@@ -40,6 +42,34 @@ function KomikCreate() {
       value: 'Tamat',
       label: 'Tamat',
       target: { value: 'Tamat', name: 'status' },
+    },
+  ];
+
+  let jenisKomik = [
+    {
+      value: 'Manga',
+      label: 'Manga',
+      target: { value: 'Manga', name: 'jenis' },
+    },
+    {
+      value: 'Manhwa',
+      label: 'Manhwa',
+      target: { value: 'Manhwa', name: 'jenis' },
+    },
+    {
+      value: 'Manhua',
+      label: 'Manhua',
+      target: { value: 'Manhua', name: 'jenis' },
+    },
+    {
+      value: 'Webtoon',
+      label: 'Webtoon',
+      target: { value: 'Webtoon', name: 'jenis' },
+    },
+    {
+      value: 'Komik Indo',
+      label: 'Komik Indo',
+      target: { value: 'Komik Indo', name: 'jenis' },
     },
   ];
 
@@ -99,7 +129,11 @@ function KomikCreate() {
           [e.target.name]: '',
         });
       }
-    } else if (e.target.name === 'genre' || e.target.name === 'status') {
+    } else if (
+      e.target.name === 'genre' ||
+      e.target.name === 'status' ||
+      e.target.name === 'jenis'
+    ) {
       setForm({ ...form, [e.target.name]: e });
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
@@ -115,6 +149,8 @@ function KomikCreate() {
       sinopsis: form.sinopsis,
       status: form.status.value,
       price: form.price,
+      jenis: form.jenis.value,
+      rilis: form.rilis,
       genre: form.genre.value,
       image: form.file,
     };
@@ -157,7 +193,7 @@ function KomikCreate() {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         stat={stat}
-
+        jenisKomik={jenisKomik}
       />
     </Container>
   );

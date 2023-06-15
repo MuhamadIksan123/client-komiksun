@@ -8,9 +8,11 @@ function TbodyWithAction({
   data,
   display,
   editUrl,
+  detailUrl,
   deleteAction,
   customAction,
   actionNotDisplay,
+  downloadAction,
   status,
 }) {
   const navigate = useNavigate();
@@ -40,10 +42,7 @@ function TbodyWithAction({
                           src={`${config.api_image}/${data[key]}`}
                         />
                       ) : key === 'document' ? (
-                        <>
-                          {customAction &&
-                            customAction(data.file._id)}
-                        </>
+                        <>{downloadAction && downloadAction(data.file._id)}</>
                       ) : key === 'date' ? (
                         moment(data[key]).format('DD-MM-YYYY, h:mm:ss a')
                       ) : (
@@ -54,6 +53,20 @@ function TbodyWithAction({
               )}
               {!actionNotDisplay && (
                 <td>
+                  {customAction &&
+                    customAction(
+                      data._id,
+                      data.statusKomik ? data.statusKomik : data.statusChapter
+                    )}
+                  {detailUrl && (
+                    <Button
+                      variant="success"
+                      size={'sm'}
+                      action={() => navigate(`${detailUrl}/${data._id}`)}
+                    >
+                      Edit
+                    </Button>
+                  )}
                   {editUrl && (
                     <Button
                       variant="success"
