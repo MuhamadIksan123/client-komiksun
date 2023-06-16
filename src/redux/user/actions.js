@@ -43,6 +43,7 @@ export const fetchUser = () => {
       let res = await debouncedFetchUser('/cms/user');
 
       res.data.data.forEach((res) => {
+        res.date = res.rilis;
         res.avatar = res?.image?.nama ?? '-';
       });
 

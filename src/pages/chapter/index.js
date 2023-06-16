@@ -33,13 +33,14 @@ function ChapterPage() {
     tambah: false,
     hapus: false,
     edit: false,
+    status: false,  
   });
 
   const checkAccess = () => {
     let { role } = localStorage.getItem('auth')
       ? JSON.parse(localStorage.getItem('auth'))
       : {};
-    const access = { tambah: false, hapus: false, edit: false };
+    const access = { tambah: false, hapus: false, edit: false, status: false };
     Object.keys(accessChapter).forEach(function (key, index) {
       if (accessChapter[key].indexOf(role) >= 0) {
         access[key] = true;

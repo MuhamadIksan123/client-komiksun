@@ -32,7 +32,7 @@ function TableWithAction({
           actionNotDisplay={actionNotDisplay}
           customAction={customAction}
           downloadAction={downloadAction}
-          detail={detailUrl}
+          detailUrl={detailUrl}
         />
       </Table>
       {!withoutPagination && data.length ? (

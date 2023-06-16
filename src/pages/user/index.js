@@ -87,9 +87,9 @@ function User() {
 
       <Table
         status={user.status}
-        thead={['Nama', 'Email', 'Role', 'Status', 'Nomor Handphone', 'Avatar', 'Aksi']}
+        thead={['Nama', 'Email', 'Role', 'Status', 'Nomor Handphone', 'Tanggal Lahir', 'Avatar', 'Aksi']}
         data={user.data}
-        tbody={['nama', 'email', 'role', 'status', 'nomor', 'avatar' ]}
+        tbody={['nama', 'email', 'role', 'status', 'nomor', 'date', 'avatar' ]}
         editUrl={access.edit ? `/user/edit` : null}
         deleteAction={access.hapus ? (id) => handleDelete(id) : null}
         withoutPagination

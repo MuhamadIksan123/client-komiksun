@@ -53,20 +53,21 @@ function TbodyWithAction({
               )}
               {!actionNotDisplay && (
                 <td>
+                  {detailUrl && (
+                    <Button
+                      className={'mx-2'}
+                      variant="secondary"
+                      size={'sm'}
+                      action={() => navigate(`${detailUrl}/${data._id}`)}
+                    >
+                      Detail
+                    </Button>
+                  )}
                   {customAction &&
                     customAction(
                       data._id,
                       data.statusKomik ? data.statusKomik : data.statusChapter
                     )}
-                  {detailUrl && (
-                    <Button
-                      variant="success"
-                      size={'sm'}
-                      action={() => navigate(`${detailUrl}/${data._id}`)}
-                    >
-                      Edit
-                    </Button>
-                  )}
                   {editUrl && (
                     <Button
                       variant="success"

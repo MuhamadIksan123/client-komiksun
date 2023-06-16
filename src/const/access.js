@@ -24,10 +24,12 @@ export const accessKomik = {
   tambah: ['vendor'],
   edit: ['vendor'],
   hapus: ['vendor'],
+  detail: ['vendor', 'admin'],
+  status: ['admin'],
 };
 
 export const accessChapter = {
-  lihat: ['vendor'],
+  lihat: ['vendor', 'admin'],
   tambah: ['vendor'],
   edit: ['vendor'],
   hapus: ['vendor'],

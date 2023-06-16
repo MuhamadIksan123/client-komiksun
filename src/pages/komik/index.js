@@ -31,13 +31,21 @@ function KomikPage() {
     tambah: false,
     hapus: false,
     edit: false,
+    detail: false,
+    status: false,
   });
 
   const checkAccess = () => {
     let { role } = localStorage.getItem('auth')
       ? JSON.parse(localStorage.getItem('auth'))
       : {};
-    const access = { tambah: false, hapus: false, edit: false };
+    const access = {
+      tambah: false,
+      hapus: false,
+      edit: false,
+      detail: false,
+      status: false,
+    };
     Object.keys(accessKomik).forEach(function (key, index) {
       if (accessKomik[key].indexOf(role) >= 0) {
         access[key] = true;
@@ -167,7 +175,7 @@ function KomikPage() {
         detailUrl={access.detail ? `/komik/detail` : null}
         editUrl={access.edit ? `/komik/edit` : null}
         deleteAction={access.hapus ? (id) => handleDelete(id) : null}
-        customAction={(id, status = '') => {
+        customAction={access.status ? (id, status = '') => {
           return (
             <Button
               className={'mx-2'}
@@ -178,7 +186,7 @@ function KomikPage() {
               Change Status
             </Button>
           );
-        }}
+        } : null}
         withoutPagination
       />
     </Container>
