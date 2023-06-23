@@ -66,7 +66,7 @@ function TbodyWithAction({
                   {customAction &&
                     customAction(
                       data._id,
-                      data.statusKomik ? data.statusKomik : data.statusChapter
+                      data.statusKomik ? data.statusKomik : (data.statusChapter ? data.statusChapter : data.status)
                     )}
                   {editUrl && (
                     <Button

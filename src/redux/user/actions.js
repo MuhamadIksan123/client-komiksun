@@ -44,7 +44,7 @@ export const fetchUser = () => {
 
       res.data.data.forEach((res) => {
         res.date = res.rilis;
-        res.avatar = res?.image?.nama ?? '-';
+        res.avatar = res?.image?.nama;
       });
 
       dispatch(

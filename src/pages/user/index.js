@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchUser } from '../../redux/user/actions';
 import KAlert from '../../components/Alert';
 import Swal from 'sweetalert2';
-import { deleteData } from '../../utils/fetch';
+import { deleteData, putData } from '../../utils/fetch';
 import { setNotif } from '../../redux/notif/actions';
 import { accessUser } from '../../const/access';
 
@@ -23,6 +23,8 @@ function User() {
     tambah: false,
     hapus: false,
     edit: false,
+    detail: false,
+    status: false,
   });
 
   const checkAccess = () => {
@@ -71,6 +73,37 @@ function User() {
     });
   };
 
+  const handleChangeStatus = (id, status) => {
+    console.log(status);
+    Swal.fire({
+      title: 'Apa kamu yakin?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iya, Ubah Status',
+      cancelButtonText: 'Batal',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const payload = {
+          status: status === 'aktif' ? 'tidak aktif' : 'aktif',
+        };
+        const res = await putData(`/cms/user/${id}/status`, payload);
+
+        dispatch(
+          setNotif(
+            true,
+            'success',
+            `berhasil ubah status user ${res.data.data.nama}`
+          )
+        );
+
+        dispatch(fetchUser());
+      }
+    });
+  };
+
   return (
     <Container className="mt-3">
       <KBreadCrumb textSecound={'User'} />
@@ -87,11 +120,35 @@ function User() {
 
       <Table
         status={user.status}
-        thead={['Nama', 'Email', 'Role', 'Status', 'Nomor Handphone', 'Tanggal Lahir', 'Avatar', 'Aksi']}
+        thead={[
+          'Nama',
+          'Email',
+          'Role',
+          'Status',
+          'Avatar',
+          'Aksi',
+        ]}
         data={user.data}
-        tbody={['nama', 'email', 'role', 'status', 'nomor', 'date', 'avatar' ]}
+        tbody={['nama', 'email', 'role', 'status', 'avatar']}
+        detailUrl={access.detail ? `/user/detail` : null}
         editUrl={access.edit ? `/user/edit` : null}
         deleteAction={access.hapus ? (id) => handleDelete(id) : null}
+        customAction={
+          access.status
+            ? (id, status = '') => {
+                return (
+                  <Button
+                    className={'mx-2'}
+                    variant="primary"
+                    size={'sm'}
+                    action={() => handleChangeStatus(id, status)}
+                  >
+                    Change Status
+                  </Button>
+                );
+              }
+            : null
+        }
         withoutPagination
       />
     </Container>

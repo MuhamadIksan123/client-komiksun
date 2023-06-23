@@ -82,7 +82,7 @@ function UserCreate() {
         target: { name: 'role', value: res?.data?.data?.role },
         value: res?.data?.data?.role,
       },
-      lahir: moment(res.data.data.lahir).format('YYYY-MM-DDTHH:SS'),
+      lahir: res.data.data.lahir,
       status: {
         label: res?.data?.data?.status,
         target: { name: 'status', value: res?.data?.data?.status },

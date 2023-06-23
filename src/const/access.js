@@ -10,6 +10,8 @@ export const accessUser = {
   tambah: ['admin'],
   edit: ['admin'],
   hapus: ['admin'],
+  detail: ['admin'],
+  status: ['admin'],
 };
 
 export const accessGenre = {
