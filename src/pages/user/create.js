@@ -20,9 +20,10 @@ function UserCreate() {
     confirmPassword: '',
     role: '',
     lahir: '',
-    status: '',
+    statusUser: '',
     otp: '',
     nomor: '',
+    biodata: '',
     komik: [''],
     file: '',
     avatar: '',
@@ -56,12 +57,12 @@ function UserCreate() {
     {
       value: 'aktif',
       label: 'aktif',
-      target: { value: 'aktif', name: 'status' },
+      target: { value: 'aktif', name: 'statusUser' },
     },
     {
       value: 'tidak aktif',
       label: 'tidak aktif',
-      target: { value: 'tidak aktif', name: 'status' },
+      target: { value: 'tidak aktif', name: 'statusUser' },
     },
   ];
 
@@ -127,7 +128,7 @@ function UserCreate() {
       }
     } else if (e?.target?.name === 'komik') {
       setForm({ ...form, komik: _temp });
-    } else if (e.target.name === 'role' || e.target.name === 'status') {
+    } else if (e.target.name === 'role' || e.target.name === 'statusUser') {
       setForm({ ...form, [e.target.name]: e });
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
@@ -144,9 +145,10 @@ function UserCreate() {
       confirmPassword: form.confirmPassword,
       role: form.role.value,
       lahir: form.lahir,
-      status: form.status.value,
+      statusUser: form.statusUser.value,
       otp: form.otp,
       nomor: form.nomor,
+      biodata: form.biodata,
       komik: form.komik.map((i) => i),
       // komik: form.komik.map((i) => i.value),
       image: form.file,

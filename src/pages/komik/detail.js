@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 import BreadCrumb from '../../components/Breadcrumb';
-import Alert from '../../components/Alert';
-import Form from './form';
-import { getData, postData, putData } from '../../utils/fetch';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setNotif } from '../../redux/notif/actions';
+import { getData } from '../../utils/fetch';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { fetchListGenres } from '../../redux/lists/actions';
 import moment from 'moment';
 import { config } from '../../configs';
@@ -14,9 +11,7 @@ import { config } from '../../configs';
 
 function KomikDetail() {
   const { komikId } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const lists = useSelector((state) => state.lists);
   const [form, setForm] = useState({
     judul: '',
     penulis: '',
@@ -29,55 +24,6 @@ function KomikDetail() {
     file: '',
     avatar: '',
   });
-
-  const [alert, setAlert] = useState({
-    status: false,
-    type: '',
-    message: '',
-  });
-
-  let stat = [
-    {
-      value: 'Ongoing',
-      label: 'Ongoing',
-      target: { value: 'Ongoing', name: 'status' },
-    },
-    {
-      value: 'Tamat',
-      label: 'Tamat',
-      target: { value: 'Tamat', name: 'status' },
-    },
-  ];
-
-  let jenisKomik = [
-    {
-      value: 'Manga',
-      label: 'Manga',
-      target: { value: 'Manga', name: 'jenis' },
-    },
-    {
-      value: 'Manhwa',
-      label: 'Manhwa',
-      target: { value: 'Manhwa', name: 'jenis' },
-    },
-    {
-      value: 'Manhua',
-      label: 'Manhua',
-      target: { value: 'Manhua', name: 'jenis' },
-    },
-    {
-      value: 'Webtoon',
-      label: 'Webtoon',
-      target: { value: 'Webtoon', name: 'jenis' },
-    },
-    {
-      value: 'Komik Indo',
-      label: 'Komik Indo',
-      target: { value: 'Komik Indo', name: 'jenis' },
-    },
-  ];
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const fetchOneKomik = async () => {
     const res = await getData(`/cms/komik/${komikId}`);

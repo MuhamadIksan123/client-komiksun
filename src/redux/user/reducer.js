@@ -2,6 +2,9 @@ import {
   START_FETCHING_USER,
   SUCCESS_FETCHING_USER,
   ERROR_FETCHING_USER,
+  SET_KEYWORD,
+  SET_STATUS,
+  SET_ROLE
 } from './constants';
 
 const statuslist = {
@@ -13,6 +16,9 @@ const statuslist = {
 
 const initialState = {
   data: [],
+  keyword: '',
+  role: '',
+  statusUser: '',
   status: statuslist.idle,
 };
 
@@ -29,6 +35,24 @@ export default function reducer(state = initialState, action) {
         ...state,
         status: statuslist.success,
         data: action.user,
+      };
+
+    case SET_KEYWORD:
+      return {
+        ...state,
+        keyword: action.keyword,
+      };
+
+    case SET_STATUS:
+      return {
+        ...state,
+        statusUser: action.statusUser,
+      };
+
+    case SET_ROLE:
+      return {
+        ...state,
+        role: action.role,
       };
 
     default:

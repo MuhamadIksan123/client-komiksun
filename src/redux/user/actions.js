@@ -2,6 +2,9 @@ import {
   START_FETCHING_USER,
   SUCCESS_FETCHING_USER,
   ERROR_FETCHING_USER,
+  SET_KEYWORD,
+  SET_STATUS,
+  SET_ROLE,
 } from './constants';
 
 import { getData } from '../../utils/fetch';
@@ -32,7 +35,7 @@ export const errorFetchingUser = () => {
 };
 
 export const fetchUser = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(startFetchingUser());
 
     try {
@@ -40,7 +43,13 @@ export const fetchUser = () => {
         dispatch(clearNotif());
       }, 5000);
 
-      let res = await debouncedFetchUser('/cms/user');
+      let params = {
+        keyword: getState().user.keyword,
+        statusUser: getState().user?.statusUser?.value || '',
+        role: getState().user?.role?.value || '',
+      };
+
+      let res = await debouncedFetchUser('/cms/user', params);
 
       res.data.data.forEach((res) => {
         res.date = res.rilis;
@@ -55,5 +64,26 @@ export const fetchUser = () => {
     } catch (error) {
       dispatch(errorFetchingUser());
     }
+  };
+};
+
+export const setKeyword = (keyword) => {
+  return {
+    type: SET_KEYWORD,
+    keyword,
+  };
+};
+
+export const setStatus = (statusUser) => {
+  return {
+    type: SET_STATUS,
+    statusUser,
+  };
+};
+
+export const setRole = (role) => {
+  return {
+    type: SET_ROLE,
+    role,
   };
 };

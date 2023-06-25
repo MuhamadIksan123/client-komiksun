@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import KBreadCrumb from '../../components/Breadcrumb';
 import Button from '../../components/Button';
 import Table from '../../components/TableWithAction';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUser } from '../../redux/user/actions';
+import { fetchUser, setKeyword, setRole, setStatus } from '../../redux/user/actions';
 import KAlert from '../../components/Alert';
 import Swal from 'sweetalert2';
 import { deleteData, putData } from '../../utils/fetch';
 import { setNotif } from '../../redux/notif/actions';
 import { accessUser } from '../../const/access';
+import SearchInput from '../../components/SearchInput';
+import SelectBox from '../../components/SelectBox';
 
 function User() {
   const navigate = useNavigate();
@@ -46,7 +48,7 @@ function User() {
 
   useEffect(() => {
     dispatch(fetchUser());
-  }, [dispatch]);
+  }, [dispatch, user.keyword, user.role, user.statusUser]);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -74,7 +76,6 @@ function User() {
   };
 
   const handleChangeStatus = (id, status) => {
-    console.log(status);
     Swal.fire({
       title: 'Apa kamu yakin?',
       text: '',
@@ -87,7 +88,7 @@ function User() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const payload = {
-          status: status === 'aktif' ? 'tidak aktif' : 'aktif',
+          statusUser: status === 'aktif' ? 'tidak aktif' : 'aktif',
         };
         const res = await putData(`/cms/user/${id}/status`, payload);
 
@@ -104,6 +105,37 @@ function User() {
     });
   };
 
+  let stat = [
+    {
+      value: 'aktif',
+      label: 'aktif',
+      target: { value: 'aktif', name: 'statusUser' },
+    },
+    {
+      value: 'tidak aktif',
+      label: 'tidak aktif',
+      target: { value: 'tidak aktif', name: 'statusUser' },
+    },
+  ];
+
+  let rol = [
+    {
+      value: 'customer',
+      label: 'customer',
+      target: { value: 'customer', name: 'role' },
+    },
+    {
+      value: 'vendor',
+      label: 'vendor',
+      target: { value: 'vendor', name: 'role' },
+    },
+    {
+      value: 'admin',
+      label: 'admin',
+      target: { value: 'admin', name: 'role' },
+    },
+  ];
+
   return (
     <Container className="mt-3">
       <KBreadCrumb textSecound={'User'} />
@@ -114,22 +146,45 @@ function User() {
         </Button>
       )}
 
+      <Row>
+        <Col>
+          <SearchInput
+            name="keyword"
+            query={user.keyword}
+            handleChange={(e) => dispatch(setKeyword(e.target.value))}
+          />
+        </Col>
+        <Col>
+          <SelectBox
+            placeholder={'Masukan pencarian status'}
+            name="statusUser"
+            value={user.statusUser}
+            options={stat}
+            isClearable={true}
+            handleChange={(e) => dispatch(setStatus(e))}
+          />
+        </Col>
+        <Col>
+          <SelectBox
+            placeholder={'Masukan pencarian role'}
+            name="role"
+            value={user.role}
+            options={rol}
+            isClearable={true}
+            handleChange={(e) => dispatch(setRole(e))}
+          />
+        </Col>
+      </Row>
+
       {notif.status && (
         <KAlert type={notif.typeNotif} message={notif.message} />
       )}
 
       <Table
         status={user.status}
-        thead={[
-          'Nama',
-          'Email',
-          'Role',
-          'Status',
-          'Avatar',
-          'Aksi',
-        ]}
+        thead={['Nama', 'Email', 'Role', 'Status', 'Avatar', 'Aksi']}
         data={user.data}
-        tbody={['nama', 'email', 'role', 'status', 'avatar']}
+        tbody={['nama', 'email', 'role', 'statusUser', 'avatar']}
         detailUrl={access.detail ? `/user/detail` : null}
         editUrl={access.edit ? `/user/edit` : null}
         deleteAction={access.hapus ? (id) => handleDelete(id) : null}

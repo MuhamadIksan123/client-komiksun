@@ -14,8 +14,6 @@ export default function UserForm({
   edit,
   lists,
   rol,
-  stat,
-  handleChangeKomik,
 }) {
   return (
     <Form className="mb-2">
@@ -70,14 +68,6 @@ export default function UserForm({
 
       <Row>
         <Col>
-          {/* <TextInputWithLabel
-            placeholder={'Masukan role'}
-            label={'Role'}
-            name="role"
-            value={rol.id}
-            type="text"
-            onChange={handleChange}
-          /> */}
           <SelectBox
             label={'Role'}
             placeholder={'Pilih role'}
@@ -101,22 +91,13 @@ export default function UserForm({
       </Row>
       <Row>
         <Col>
-          {/* <TextInputWithLabel
-            placeholder={'Masukan status'}
-            label={'Status'}
-            name="status"
-            value={form.status}
+          <TextInputWithLabel
+            placeholder={'Masukan nomor handphone'}
+            label={'Nomor HP'}
+            name="nomor"
+            value={form.nomor}
             type="text"
             onChange={handleChange}
-          /> */}
-          <SelectBox
-            label={'Status'}
-            placeholder={'Pilih status'}
-            name="role"
-            value={form.status}
-            options={stat}
-            isClearable={true}
-            handleChange={(e) => handleChange(e)}
           />
         </Col>
         <Col>
@@ -134,10 +115,10 @@ export default function UserForm({
       <Row>
         <Col>
           <TextInputWithLabel
-            placeholder={'Masukan nomor handphone'}
-            label={'Nomor HP'}
-            name="nomor"
-            value={form.nomor}
+            placeholder={'Masukan biodata'}
+            label={'Biodata'}
+            name="biodata"
+            value={form.biodata}
             type="text"
             onChange={handleChange}
           />
@@ -181,7 +162,6 @@ export default function UserForm({
         </Col>
         <Col></Col>
       </Row>
-
       <Button variant="primary" action={handleSubmit} loading={isLoading}>
         {edit ? 'Ubah' : 'Simpan'}
       </Button>

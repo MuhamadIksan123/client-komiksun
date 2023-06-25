@@ -1,162 +1,117 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 import BreadCrumb from '../../components/Breadcrumb';
-import Alert from '../../components/Alert';
-import Form from './form';
-import { getData, postData, putData } from '../../utils/fetch';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setNotif } from '../../redux/notif/actions';
-import { fetchListGenres } from '../../redux/lists/actions';
+import { getData } from '../../utils/fetch';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchListKomiks } from '../../redux/lists/actions';
 import moment from 'moment';
 import { config } from '../../configs';
 
-
-function KomikDetail() {
-  const { komikId } = useParams();
-  const navigate = useNavigate();
+function UserDetail() {
+  const { userId } = useParams();
   const dispatch = useDispatch();
-  const lists = useSelector((state) => state.lists);
   const [form, setForm] = useState({
-    judul: '',
-    penulis: '',
-    sinopsis: '',
-    status: '',
-    price: 0,
-    jenis: '',
-    rilis: '',
-    genre: '',
-    file: '',
+    nama: '',
+    email: '',
+    role: '',
+    lahir: '',
+    statusUser: '',
+    otp: '',
+    nomor: '',
+    biodata: '',
+    komik: '',
     avatar: '',
   });
 
-  const [alert, setAlert] = useState({
-    status: false,
-    type: '',
-    message: '',
-  });
-
-  let stat = [
-    {
-      value: 'Ongoing',
-      label: 'Ongoing',
-      target: { value: 'Ongoing', name: 'status' },
-    },
-    {
-      value: 'Tamat',
-      label: 'Tamat',
-      target: { value: 'Tamat', name: 'status' },
-    },
-  ];
-
-  let jenisKomik = [
-    {
-      value: 'Manga',
-      label: 'Manga',
-      target: { value: 'Manga', name: 'jenis' },
-    },
-    {
-      value: 'Manhwa',
-      label: 'Manhwa',
-      target: { value: 'Manhwa', name: 'jenis' },
-    },
-    {
-      value: 'Manhua',
-      label: 'Manhua',
-      target: { value: 'Manhua', name: 'jenis' },
-    },
-    {
-      value: 'Webtoon',
-      label: 'Webtoon',
-      target: { value: 'Webtoon', name: 'jenis' },
-    },
-    {
-      value: 'Komik Indo',
-      label: 'Komik Indo',
-      target: { value: 'Komik Indo', name: 'jenis' },
-    },
-  ];
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const fetchOneKomik = async () => {
-    const res = await getData(`/cms/komik/${komikId}`);
+  const fetchOneUser = async () => {
+    const res = await getData(`/cms/user/${userId}`);
 
     setForm({
       ...form,
-      judul: res.data.data.judul,
-      penulis: res.data.data.penulis,
-      sinopsis: res.data.data.sinopsis,
-      status: res.data.data.status,
-      price: res.data.data.price,
-      jenis: res.data.data.jenis,
-      rilis: moment(res.data.data.rilis).format('DD-MM-YYYY, h:mm:ss a'),
-      genre: res.data.data.genre.nama,
+      nama: res.data.data.nama,
+      email: res.data.data.email,
+      role: res.data.data.role,
+      lahir: moment(res.data.data.lahir).format('DD-MM-YYYY'),
+      statusUser: res.data.data.statusUser,
+      otp: res.data.data.otp,
+      nomor: res.data.data.nomor,
+      biodata: res.data.data.biodata,
+      komik: res.data.data.komik.map((item) => item.label),
       avatar: res.data.data.image.nama,
     });
   };
 
   useEffect(() => {
-    fetchOneKomik();
+    fetchOneUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    dispatch(fetchListGenres());
+    dispatch(fetchListKomiks());
   }, [dispatch]);
 
   return (
-    <div className='container'>
-      <BreadCrumb
-        textSecound={'Komik'}
-        urlSecound={'/komik'}
-        textThird="Detail"
-      />
-      <div className="row mt-4 mb-3">
-        <div className="col-lg-6 col-12 mb-4 justify-content-center align-items-center">
-          <img
-            src={`${config.api_image}/${form.avatar}`}
-            alt="semina"
-            className="img-responsive"
-          />
-        </div>
-        <div className="col-lg-6 col-12">
-          <div className="d-flex flex-column">
-            <ListGroup variant="flush" className="mt-2">
-              <ListGroup.Item>
-                <b>Judul:</b> <span className="text-muted">{form.judul}</span>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Penulis:</b>{' '}
-                <span className="text-muted">{form.penulis}</span>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Status: </b>{' '}
-                <span className="text-muted">{form.status}</span>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Jenis:</b> <span className="text-muted">{form.jenis}</span>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Rilis:</b> <span className="text-muted">{form.rilis}</span>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Price:</b> <span className="text-muted">{form.price === 0 ? 'Free' : `Rp. ${form.price}`}</span>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Genre: </b>
-                <span className="text-muted">{form.genre}</span>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Sinopsis:</b>{' '}
-                <span className="text-muted">{form.sinopsis}</span>
-              </ListGroup.Item>
-            </ListGroup>
+    <>
+      <div className="container">
+        <BreadCrumb
+          textSecound={'User'}
+          urlSecound={'/user'}
+          textThird="Detail"
+        />
+        <div className="row mt-4 mb-3">
+          <div className="col-lg-6 col-12 mb-4 justify-content-center align-items-center">
+            <img
+              src={`${config.api_image}/${form.avatar}`}
+              alt="semina"
+              className="img-responsive"
+            />
+          </div>
+          <div className="col-lg-6 col-12">
+            <div className="d-flex flex-column">
+              <ListGroup variant="flush" className="mt-2">
+                <ListGroup.Item>
+                  <b>Nama:</b> <span className="text-muted">{form.nama}</span>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>Email:</b>{' '}
+                  <span className="text-muted">{form.email}</span>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>Role: </b> <span className="text-muted">{form.role}</span>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>Status: </b>{' '}
+                  <span className="text-muted">{form.statusUser}</span>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>OTP: </b> <span className="text-muted">{form.otp}</span>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>Tanggal Lahir:</b>{' '}
+                  <span className="text-muted">{form.lahir}</span>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>No Telp:</b>{' '}
+                  <span className="text-muted">
+                    {form.nomor === '-' ? 'Belum Diisi' : form.nomor}
+                  </span>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>Komik: </b>
+                  <span className="text-muted">{form.komik === '' ? '' : form.komik.join(',')}</span>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>About:</b>{' '}
+                  <span className="text-muted">{form.biodata}</span>
+                </ListGroup.Item>
+              </ListGroup>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
-export default KomikDetail;
+export default UserDetail;

@@ -22,9 +22,10 @@ function UserCreate() {
     confirmPassword: '',
     role: '',
     lahir: '',
-    status: '',
+    statusUser: '',
     otp: '',
     nomor: '',
+    biodata: '',
     komik: [''],
     file: '',
     avatar: '',
@@ -54,19 +55,6 @@ function UserCreate() {
     },
   ];
 
-  let stat = [
-    {
-      value: 'aktif',
-      label: 'aktif',
-      target: { value: 'aktif', name: 'status' },
-    },
-    {
-      value: 'tidak aktif',
-      label: 'tidak aktif',
-      target: { value: 'tidak aktif', name: 'status' },
-    },
-  ];
-
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchOneUser = async () => {
@@ -82,14 +70,10 @@ function UserCreate() {
         target: { name: 'role', value: res?.data?.data?.role },
         value: res?.data?.data?.role,
       },
-      lahir: res.data.data.lahir,
-      status: {
-        label: res?.data?.data?.status,
-        target: { name: 'status', value: res?.data?.data?.status },
-        value: res?.data?.data?.status,
-      },
+      lahir: moment(res.data.data.lahir).format('YYYY-MM-DDTHH:SS'),
       otp: res.data.data.otp,
       nomor: res.data.data.nomor,
+      biodata: res.data.data.biodata,
       komik: res.data.data.komik,
       file: res.data.data.image._id,
       avatar: res.data.data.image.nama,
@@ -161,7 +145,7 @@ function UserCreate() {
       }
     } else if (e?.target?.name === 'komik') {
       setForm({ ...form, komik: _temp });
-    } else if (e.target.name === 'role' || e.target.name === 'status') {
+    } else if (e.target.name === 'role' || e.target.name === 'statusUser') {
       setForm({ ...form, [e.target.name]: e });
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
@@ -178,9 +162,10 @@ function UserCreate() {
       confirmPassword: form.confirmPassword,
       role: form.role.value,
       lahir: form.lahir,
-      status: form.status.value,
+      statusUser: form.statusUser.value,
       otp: form.otp,
       nomor: form.nomor,
+      biodata: form.biodata,
       komik: form.komik.map((i) => i),
       image: form.file,
     };
@@ -215,7 +200,6 @@ function UserCreate() {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         rol={rol}
-        stat={stat}
         edit
       />
     </Container>
