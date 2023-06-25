@@ -4,6 +4,7 @@ import {
   ERROR_FETCHING_CHAPTER,
   SET_KEYWORD,
   SET_KOMIK,
+  SET_STATUS
 } from './constants';
 
 import { getData } from '../../utils/fetch';
@@ -43,12 +44,12 @@ export const fetchChapter = () => {
       let params = {
         keyword: getState().chapter.keyword,
         komik: getState().chapter?.komik?.value || '',
+        statusChapter: getState().chapter?.statusChapter?.value || '',
       };
 
       let res = await debouncedFetchChapter('/cms/chapter', params);
 
       res.data.data.forEach((res) => {
-        res.status = res.statusChapter;
         res.komikName = res?.komik?.judul ?? '';
         res.document = res?.file?.nama ?? '-';
         res.date = res.rilis;
@@ -76,5 +77,12 @@ export const setKomik = (komik) => {
   return {
     type: SET_KOMIK,
     komik,
+  };
+};
+
+export const setStatus = (statusChapter) => {
+  return {
+    type: SET_STATUS,
+    statusChapter,
   };
 };

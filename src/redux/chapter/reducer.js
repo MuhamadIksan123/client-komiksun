@@ -4,6 +4,7 @@ import {
   ERROR_FETCHING_CHAPTER,
   SET_KEYWORD,
   SET_KOMIK,
+  SET_STATUS,
 } from './constants';
 
 const statuslist = {
@@ -17,6 +18,7 @@ const initialState = {
   data: [],
   keyword: '',
   komik: '',
+  statusChapter: '',
   status: statuslist.idle,
 };
 
@@ -45,6 +47,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         komik: action.komik,
+      };
+
+    case SET_STATUS:
+      return {
+        ...state,
+        statusChapter: action.statusChapter,
       };
 
     default:

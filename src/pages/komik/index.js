@@ -10,6 +10,7 @@ import {
   fetchKomik,
   setKeyword,
   setGenre,
+  setStatus
 } from '../../redux/komik/actions';
 import SAlert from '../../components/Alert';
 import Swal from 'sweetalert2';
@@ -26,6 +27,8 @@ function KomikPage() {
   const notif = useSelector((state) => state.notif);
   const komik = useSelector((state) => state.komik);
   const lists = useSelector((state) => state.lists);
+
+  console.log(komik);
 
   const [access, setAccess] = useState({
     tambah: false,
@@ -60,7 +63,7 @@ function KomikPage() {
 
   useEffect(() => {
     dispatch(fetchKomik());
-  }, [dispatch, komik.keyword, komik.genre, komik.vendor]);
+  }, [dispatch, komik.keyword, komik.genre, komik.statusKomik]);
 
   useEffect(() => {
     dispatch(fetchListGenres());
@@ -123,6 +126,24 @@ function KomikPage() {
     });
   };
 
+  let stat = [
+    {
+      value: 'Publikasi',
+      label: 'Publikasi',
+      target: { value: 'Publikasi', name: 'statusKomik' },
+    },
+    {
+      value: 'Tolak Publikasi',
+      label: 'Tolak Publikasi',
+      target: { value: 'Tolak Publikasi', name: 'statusKomik' },
+    },
+    {
+      value: 'Menunggu Konfirmasi',
+      label: 'Menunggu Konfirmasi',
+      target: { value: 'Menunggu Konfirmasi', name: 'statusKomik' },
+    },
+  ];
+
   return (
     <Container className="mt-3">
       <SBreadCrumb textSecound={'Komik'} />
@@ -149,6 +170,16 @@ function KomikPage() {
             handleChange={(e) => dispatch(setGenre(e))}
           />
         </Col>
+        <Col>
+          <SelectBox
+            placeholder={'Masukan pencarian status'}
+            name="statusKomik"
+            value={komik.statusKomik}
+            options={stat}
+            isClearable={true}
+            handleChange={(e) => dispatch(setStatus(e))}
+          />
+        </Col>
       </Row>
 
       {notif.status && (
@@ -156,37 +187,28 @@ function KomikPage() {
       )}
       <Table
         status={komik.status}
-        thead={[
-          'Judul',
-          'Status',
-          'Genre',
-          'Rilis',
-          'Avatar',
-          'Aksi',
-        ]}
+        thead={['Judul', 'Status', 'Genre', 'Rilis', 'Avatar', 'Aksi']}
         data={komik.data}
-        tbody={[
-          'judul',
-          'statusKomik',
-          'genreName',
-          'date',
-          'avatar',
-        ]}
+        tbody={['judul', 'statusKomik', 'genreName', 'date', 'avatar']}
         detailUrl={access.detail ? `/komik/detail` : null}
         editUrl={access.edit ? `/komik/edit` : null}
         deleteAction={access.hapus ? (id) => handleDelete(id) : null}
-        customAction={access.status ? (id, status = '') => {
-          return (
-            <Button
-              className={'mx-2'}
-              variant="primary"
-              size={'sm'}
-              action={() => handleChangeStatus(id, status)}
-            >
-              Change Status
-            </Button>
-          );
-        } : null}
+        customAction={
+          access.status
+            ? (id, status = '') => {
+                return (
+                  <Button
+                    className={'mx-2'}
+                    variant="primary"
+                    size={'sm'}
+                    action={() => handleChangeStatus(id, status)}
+                  >
+                    Change Status
+                  </Button>
+                );
+              }
+            : null
+        }
         withoutPagination
       />
     </Container>

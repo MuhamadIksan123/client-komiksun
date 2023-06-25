@@ -4,6 +4,7 @@ import {
   ERROR_FETCHING_KOMIK,
   SET_KEYWORD,
   SET_GENRE,
+  SET_STATUS,
 } from './constants';
 
 import { getData } from '../../utils/fetch';
@@ -43,6 +44,7 @@ export const fetchKomik = () => {
       let params = {
         keyword: getState().komik.keyword,
         genre: getState().komik?.genre?.value || '',
+        statusKomik: getState().komik?.statusKomik?.value || '',
       };
 
       let res = await debouncedFetchKomik('/cms/komik', params);
@@ -76,5 +78,12 @@ export const setGenre = (genre) => {
   return {
     type: SET_GENRE,
     genre,
+  };
+};
+
+export const setStatus = (statusKomik) => {
+  return {
+    type: SET_STATUS,
+    statusKomik,
   };
 };

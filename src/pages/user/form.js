@@ -74,7 +74,7 @@ export default function UserForm({
             name="role"
             value={form.role}
             options={rol}
-            isClearable={true}
+            isClearable={false}
             handleChange={(e) => handleChange(e)}
           />
         </Col>

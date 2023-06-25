@@ -82,6 +82,7 @@ function UserCreate() {
 
   useEffect(() => {
     fetchOneUser();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -98,10 +99,13 @@ function UserCreate() {
 
   const handleChange = async (e) => {
     const _temp = Array.isArray(e) ? e : null;
-    console.log(_temp);
-    if (Array.isArray(e)) e = e[0];
-
-    if (e.target.name === 'avatar') {
+    console.log(e);
+    if (Array.isArray(e)) {
+      if (e.length > 0) e = e[0];
+      else e = { target: { name: 'komik' } };
+    }
+    console.log('FASE 1');
+    if (e?.target?.name === 'avatar') {
       if (
         e?.target?.files[0]?.type === 'image/jpg' ||
         e?.target?.files[0]?.type === 'image/png' ||
@@ -144,9 +148,10 @@ function UserCreate() {
         });
       }
     } else if (e?.target?.name === 'komik') {
+      console.log('fase 2');
       setForm({ ...form, komik: _temp });
     } else if (e.target.name === 'role' || e.target.name === 'statusUser') {
-      setForm({ ...form, [e.target.name]: e });
+      setForm({ ...form, role: e });
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
     }

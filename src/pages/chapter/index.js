@@ -10,6 +10,7 @@ import {
   fetchChapter,
   setKeyword,
   setKomik,
+  setStatus
 } from '../../redux/chapter/actions';
 import SAlert from '../../components/Alert';
 import Swal from 'sweetalert2';
@@ -55,7 +56,7 @@ function ChapterPage() {
 
   useEffect(() => {
     dispatch(fetchChapter());
-  }, [dispatch, chapter.keyword, chapter.komik]);
+  }, [dispatch, chapter.keyword, chapter.komik, chapter.statusChapter]);
 
   useEffect(() => {
     dispatch(fetchListKomiks());
@@ -121,6 +122,24 @@ function ChapterPage() {
     getBlob(`/cms/files/${id}`);
   };
 
+  let stat = [
+    {
+      value: 'Publikasi',
+      label: 'Publikasi',
+      target: { value: 'Publikasi', name: 'statusKomik' },
+    },
+    {
+      value: 'Tolak Publikasi',
+      label: 'Tolak Publikasi',
+      target: { value: 'Tolak Publikasi', name: 'statusKomik' },
+    },
+    {
+      value: 'Menunggu Konfirmasi',
+      label: 'Menunggu Konfirmasi',
+      target: { value: 'Menunggu Konfirmasi', name: 'statusKomik' },
+    },
+  ];
+
   return (
     <Container className="mt-3">
       <SBreadCrumb textSecound={'Chapter'} />
@@ -147,6 +166,16 @@ function ChapterPage() {
             handleChange={(e) => dispatch(setKomik(e))}
           />
         </Col>
+        <Col>
+          <SelectBox
+            placeholder={'Masukan pencarian status'}
+            name="statusChapter"
+            value={chapter.statusChapter}
+            options={stat}
+            isClearable={true}
+            handleChange={(e) => dispatch(setStatus(e))}
+          />
+        </Col>
       </Row>
 
       {notif.status && (
@@ -155,7 +184,7 @@ function ChapterPage() {
       <Table
         status={chapter.status}
         thead={['Judul', 'Status', 'Komik', 'File', 'Tanggal Rilis', 'Aksi']}
-        tbody={['judul', 'status', 'komikName', 'document', 'date']}
+        tbody={['judul', 'statusChapter', 'komikName', 'document', 'date']}
         data={chapter.data}
         editUrl={access.edit ? `/chapter/edit` : null}
         deleteAction={access.hapus ? (id) => handleDelete(id) : null}
@@ -171,18 +200,22 @@ function ChapterPage() {
             </Button>
           );
         }}
-        customAction={access.status ? (id, status = '') => {
-          return (
-            <Button
-              className={'mx-2'}
-              variant="primary"
-              size={'sm'}
-              action={() => handleChangeStatus(id, status)}
-            >
-              Change Status
-            </Button>
-          );
-        } : null}
+        customAction={
+          access.status
+            ? (id, status = '') => {
+                return (
+                  <Button
+                    className={'mx-2'}
+                    variant="primary"
+                    size={'sm'}
+                    action={() => handleChangeStatus(id, status)}
+                  >
+                    Change Status
+                  </Button>
+                );
+              }
+            : null
+        }
         withoutPagination
       />
     </Container>
