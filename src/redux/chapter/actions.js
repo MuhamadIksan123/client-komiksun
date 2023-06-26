@@ -50,6 +50,7 @@ export const fetchChapter = () => {
       let res = await debouncedFetchChapter('/cms/chapter', params);
 
       res.data.data.forEach((res) => {
+        res.status = res.statusChapter;
         res.komikName = res?.komik?.judul ?? '';
         res.document = res?.file?.nama ?? '-';
         res.date = res.rilis;

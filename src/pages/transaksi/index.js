@@ -56,12 +56,12 @@ function OrderPage() {
           'Nama',
           'Email',
           'Judul',
-          'Tanggal Event',
+          'Harga',
+          'Penerbit',
           'Tanggal Order',
-          'Tempat',
         ]}
         data={transaksi.data}
-        tbody={['name', 'email', 'title', 'date', 'orderDate', 'venueName']}
+        tbody={['nama', 'email', 'judul', 'price', 'penerbit', 'date']}
         pages={transaksi.pages}
         actionNotDisplay
         handlePageClick={({ selected }) => dispatch(setPage(selected + 1))}

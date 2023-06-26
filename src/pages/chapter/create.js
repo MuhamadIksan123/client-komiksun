@@ -15,7 +15,7 @@ function ChapterCreate() {
   const lists = useSelector((state) => state.lists);
   const [form, setForm] = useState({
     judul: '',
-    rilis: '',
+    rilis: new Date(),
     komik: '',
     file: '',
     document: '',

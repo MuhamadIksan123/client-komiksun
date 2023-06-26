@@ -53,6 +53,8 @@ export const fetchTransaksi = () => {
 
       let res = await debouncedFetchTransaksi('/cms/transaksi', params);
 
+      console.log(res);
+
       const _temp = [];
       res.data.data.transaksi.forEach((res) => {
         _temp.push({
@@ -60,8 +62,8 @@ export const fetchTransaksi = () => {
           email: res.personalDetail.email,
           judul: res.historyKomik.judul,
           price: res.historyKomik.price,
-          penulis: res.historyKomik.penulis,
-          transaksiDate: moment(res.date).format('DD-MM-YYYY, h:mm:ss a'),
+          penerbit: res.komik.vendor.nama,
+          date: res.date,
         });
       });
 

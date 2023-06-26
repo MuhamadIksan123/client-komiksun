@@ -184,7 +184,7 @@ function ChapterPage() {
       <Table
         status={chapter.status}
         thead={['Judul', 'Status', 'Komik', 'File', 'Tanggal Rilis', 'Aksi']}
-        tbody={['judul', 'statusChapter', 'komikName', 'document', 'date']}
+        tbody={['judul', 'status', 'komikName', 'document', 'date']}
         data={chapter.data}
         editUrl={access.edit ? `/chapter/edit` : null}
         deleteAction={access.hapus ? (id) => handleDelete(id) : null}

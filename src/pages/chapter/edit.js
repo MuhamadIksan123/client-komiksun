@@ -9,7 +9,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotif } from '../../redux/notif/actions';
 import { fetchListKomiks } from '../../redux/lists/actions';
-import moment from 'moment';
 
 function ChaptersCreate() {
   const navigate = useNavigate();
@@ -18,7 +17,6 @@ function ChaptersCreate() {
   const lists = useSelector((state) => state.lists);
   const [form, setForm] = useState({
     judul: '',
-    rilis: '',
     komik: '',
     file: '',
     document: '',
@@ -38,7 +36,6 @@ function ChaptersCreate() {
     setForm({
       ...form,
       judul: res.data.data.judul,
-      rilis: moment(res.data.data.rilis).format('YYYY-MM-DDTHH:SS'),
       komik: {
         label: res?.data?.data?.komik?.judul,
         target: { name: 'komik', value: res?.data?.data?.komik?._id },
@@ -116,7 +113,6 @@ function ChaptersCreate() {
 
     const payload = {
       judul: form.judul,
-      rilis: form.rilis,
       komik: form.komik.value,
       file: form.file,
     };

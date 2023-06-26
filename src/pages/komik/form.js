@@ -87,30 +87,6 @@ export default function KomikForm({
       </Row>
       <Row>
         <Col>
-          <SelectBox
-            label={'Jenis Komik'}
-            placeholder={'Pilih jenis komik'}
-            name="jenis"
-            value={form.jenis}
-            options={jenisKomik}
-            isClearable={true}
-            handleChange={(e) => handleChange(e)}
-          />
-        </Col>
-        <Col>
-          <TextInputWithLabel
-            placeholder={'Masukan tanggal rilis'}
-            label={'Tanggal Rilis'}
-            name="rilis"
-            value={form.rilis}
-            type="datetime-local"
-            onChange={handleChange}
-          />
-        </Col>
-      </Row>
-
-      <Row>
-        <Col>
           <TextInputWithLabel
             placeholder={'Masukan Avatar'}
             label={'Cover'}
@@ -134,9 +110,18 @@ export default function KomikForm({
             </div>
           )}
         </Col>
-        <Col></Col>
+        <Col>
+          <SelectBox
+            label={'Jenis Komik'}
+            placeholder={'Pilih jenis komik'}
+            name="jenis"
+            value={form.jenis}
+            options={jenisKomik}
+            isClearable={true}
+            handleChange={(e) => handleChange(e)}
+          />
+        </Col>
       </Row>
-
       <Button variant="primary" action={handleSubmit} loading={isLoading}>
         {edit ? 'Ubah' : 'Simpan'}
       </Button>

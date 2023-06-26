@@ -53,16 +53,7 @@ export default function ChapterForm({
             <>{customAction && customAction(form.file)}</>
           )}
         </Col>
-        <Col>
-          <TextInputWithLabel
-            placeholder={'Masukan tanggal rilis'}
-            label={'Tanggal Rilis'}
-            name="rilis"
-            value={form.rilis}
-            type="datetime-local"
-            onChange={handleChange}
-          />
-        </Col>
+        <Col></Col>
       </Row>
 
       <Button variant="primary" action={handleSubmit} loading={isLoading}>

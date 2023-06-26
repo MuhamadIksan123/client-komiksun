@@ -8,7 +8,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotif } from '../../redux/notif/actions';
 import { fetchListGenres } from '../../redux/lists/actions';
-import moment from 'moment';
 
 function KomikEdit() {
   const { komikId } = useParams();
@@ -22,7 +21,6 @@ function KomikEdit() {
     status: '',
     price: 0,
     jenis: '',
-    rilis: '',
     genre: '',
     file: '',
     avatar: '',
@@ -96,7 +94,6 @@ function KomikEdit() {
         target: { name: 'jenis', value: res?.data?.data?.jenis },
         value: res?.data?.data?.jenis,
       },
-      rilis: moment(res.data.data.rilis).format('YYYY-MM-DDTHH:SS'),
       genre: {
         label: res?.data?.data?.genre?.nama,
         target: { name: 'genre', value: res?.data?.data?.genre?._id },
@@ -186,7 +183,6 @@ function KomikEdit() {
       status: form.status.value,
       price: form.price,
       jenis: form.jenis.value,
-      rilis: form.rilis,
       genre: form.genre.value,
       image: form.file,
     };

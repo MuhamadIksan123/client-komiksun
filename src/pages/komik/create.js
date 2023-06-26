@@ -19,7 +19,7 @@ function KomikCreate() {
     sinopsis: '',
     status: '',
     jenis: '',
-    rilis: '',
+    rilis: new Date(),
     price: 0,
     genre: '',
     file: '',
