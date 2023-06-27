@@ -9,6 +9,7 @@ import { GenreRoute } from './GenreRoutes';
 import { KomikRoute } from './KomikRoutes';
 import { ChapterRoute } from './ChapterRoutes';
 import { PaymentRoute } from './PaymentRoutes';
+import { ContactRoute } from './ContactRoutes';
 import KNavbar from '../components/Navbar';
 import { TransaksiRoute } from './TransaksiRoutes';
 
@@ -39,6 +40,7 @@ export function AppRoutes() {
         <Route path="chapter/*" element={<ChapterRoute />} />
         <Route path="payment/*" element={<PaymentRoute />} />
         <Route path="transaksi/*" element={<TransaksiRoute />} />
+        <Route path="contact/*" element={<ContactRoute />} />
 
         <Route path="" element={<Navigate to="/dashboard" replace={true} />} />
       </Route>

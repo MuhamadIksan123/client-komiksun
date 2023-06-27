@@ -50,3 +50,9 @@ export const accessTransaksi = {
   edit: ['admin', 'vendor', 'customer'],
   hapus: ['admin', 'vendor', 'customer'],
 };
+
+export const accessContact = {
+  lihat: ['admin'],
+  hapus: ['admin'],
+  detail: ['admin'],
+};

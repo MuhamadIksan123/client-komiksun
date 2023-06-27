@@ -15,6 +15,8 @@ import paymentReducer from './payment/reducer';
 import listsReducer from './lists/reducer';
 import chapterReducer from './chapter/reducer';
 import transaksiReducer from './transaksi/reducer';
+import contactReducer from './contact/reducer';
+
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -28,6 +30,7 @@ const rootReducers = combineReducers({
   lists: listsReducer,
   chapter: chapterReducer,
   transaksi: transaksiReducer,
+  contact: contactReducer,
 });
 const store = createStore(
   rootReducers,

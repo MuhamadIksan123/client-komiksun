@@ -10,6 +10,7 @@ import {
   accessChapter,
   accessPayment,
   accessTransaksi,
+  accessContact
 } from '../../const/access';
 
 function KNavbar() {
@@ -78,6 +79,13 @@ function KNavbar() {
             action={() => navigate('/payment')}
           >
             Payment
+          </NavLink>
+          <NavLink
+            role={role}
+            roles={accessContact.lihat}
+            action={() => navigate('/contact')}
+          >
+            Contact
           </NavLink>
           <NavLink
             role={role}
