@@ -28,8 +28,6 @@ function KomikPage() {
   const komik = useSelector((state) => state.komik);
   const lists = useSelector((state) => state.lists);
 
-  console.log(komik);
-
   const [access, setAccess] = useState({
     tambah: false,
     hapus: false,

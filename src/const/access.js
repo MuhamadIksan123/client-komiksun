@@ -49,6 +49,8 @@ export const accessTransaksi = {
   tambah: ['admin', 'vendor', 'customer'],
   edit: ['admin', 'vendor', 'customer'],
   hapus: ['admin', 'vendor', 'customer'],
+  status: ['admin'],
+  detail: ['admin'],
 };
 
 export const accessContact = {

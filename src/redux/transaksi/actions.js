@@ -59,11 +59,12 @@ export const fetchTransaksi = () => {
       res.data.data.transaksi.forEach((res) => {
         _temp.push({
           nama: `${res.personalDetail.firstName} ${res.personalDetail.lastName}`,
-          email: res.personalDetail.email,
           judul: res.historyKomik.judul,
           price: res.historyKomik.price,
           penerbit: res.komik.vendor.nama,
           date: res.date,
+          statusTransaksi: res.statusTransaksi,
+          _id: res._id
         });
       });
 

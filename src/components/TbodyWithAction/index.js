@@ -15,6 +15,7 @@ function TbodyWithAction({
   downloadAction,
   status,
 }) {
+  console.log(data);
   const navigate = useNavigate();
   return (
     <tbody>
@@ -66,7 +67,7 @@ function TbodyWithAction({
                   {customAction &&
                     customAction(
                       data._id,
-                      data.statusKomik ? data.statusKomik : (data.statusChapter ? data.statusChapter : data.statusUser)
+                      data.statusKomik ? data.statusKomik : (data.statusChapter ? data.statusChapter : (data.statusUser ? data.statusUser : data.statusTransaksi))
                     )}
                   {editUrl && (
                     <Button
