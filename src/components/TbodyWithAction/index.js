@@ -15,7 +15,6 @@ function TbodyWithAction({
   downloadAction,
   status,
 }) {
-  console.log(data);
   const navigate = useNavigate();
   return (
     <tbody>

@@ -10,7 +10,7 @@ import {
   fetchKomik,
   setKeyword,
   setGenre,
-  setStatus
+  setStatus,
 } from '../../redux/komik/actions';
 import SAlert from '../../components/Alert';
 import Swal from 'sweetalert2';
@@ -107,7 +107,7 @@ function KomikPage() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const payload = {
-          statusKomik: status === 'Tolak Publikasi' ? 'Publikasi' : 'Tolak Publikasi',
+          statusKomik: status === 'Publikasi' ? 'Tolak Publikasi' : 'Publikasi',
         };
         const res = await putData(`/cms/komik/${id}/status`, payload);
 

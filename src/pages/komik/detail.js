@@ -3,15 +3,12 @@ import { ListGroup } from 'react-bootstrap';
 import BreadCrumb from '../../components/Breadcrumb';
 import { getData } from '../../utils/fetch';
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { fetchListGenres } from '../../redux/lists/actions';
 import moment from 'moment';
 import { config } from '../../configs';
 
 
 function KomikDetail() {
   const { komikId } = useParams();
-  const dispatch = useDispatch();
   const [form, setForm] = useState({
     judul: '',
     penulis: '',
@@ -46,10 +43,6 @@ function KomikDetail() {
     fetchOneKomik();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    dispatch(fetchListGenres());
-  }, [dispatch]);
 
   return (
     <div className='container'>

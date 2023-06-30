@@ -76,11 +76,13 @@ function OrderPage() {
         };
         const res = await putData(`/cms/transaksi/${id}/status`, payload);
 
+        console.log(res);
+
         dispatch(
           setNotif(
             true,
             'success',
-            `berhasil ubah status komik ${res.data.data.komik.nama}`
+            `berhasil ubah status komik ${res.data.data.personalDetail.firstName} ${res.data.data.personalDetail.lastName}`
           )
         );
 
@@ -137,7 +139,7 @@ function OrderPage() {
         ]}
         pages={transaksi.pages}
         handlePageClick={({ selected }) => dispatch(setPage(selected + 1))}
-        detailUrl={access.detail ? `/komik/detail` : null}
+        detailUrl={access.detail ? `/transaksi/detail` : null}
         customAction={
           access.status
             ? (id, status = '') => {

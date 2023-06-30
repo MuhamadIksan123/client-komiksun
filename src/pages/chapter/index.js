@@ -102,7 +102,8 @@ function ChapterPage() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const payload = {
-          statusChapter: status === 'Tolak Publikasi' ? 'Publikasi' : 'Tolak Publikasi',
+          statusChapter:
+            status === 'Publikasi' ? 'Tolak Publikasi' : 'Publikasi',
         };
         const res = await putData(`/cms/chapter/${id}/status`, payload);
 

@@ -53,8 +53,6 @@ export const fetchTransaksi = () => {
 
       let res = await debouncedFetchTransaksi('/cms/transaksi', params);
 
-      console.log(res);
-
       const _temp = [];
       res.data.data.transaksi.forEach((res) => {
         _temp.push({

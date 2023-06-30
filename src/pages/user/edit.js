@@ -99,12 +99,10 @@ function UserCreate() {
 
   const handleChange = async (e) => {
     const _temp = Array.isArray(e) ? e : null;
-    console.log(e);
     if (Array.isArray(e)) {
       if (e.length > 0) e = e[0];
       else e = { target: { name: 'komik' } };
     }
-    console.log('FASE 1');
     if (e?.target?.name === 'avatar') {
       if (
         e?.target?.files[0]?.type === 'image/jpg' ||
@@ -148,7 +146,6 @@ function UserCreate() {
         });
       }
     } else if (e?.target?.name === 'komik') {
-      console.log('fase 2');
       setForm({ ...form, komik: _temp });
     } else if (e.target.name === 'role' || e.target.name === 'statusUser') {
       setForm({ ...form, role: e });
