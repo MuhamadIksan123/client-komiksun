@@ -102,7 +102,7 @@ function ChapterCreate() {
         setNotif(
           true,
           'success',
-          `berhasil tambah chapter ${res.data.data.judul}`
+          `Berhasil tambah chapter ${res.data.data.judul}`
         )
       );
       navigate('/chapter');

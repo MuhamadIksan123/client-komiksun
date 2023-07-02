@@ -5,7 +5,12 @@ import KBreadCrumb from '../../components/Breadcrumb';
 import Button from '../../components/Button';
 import Table from '../../components/TableWithAction';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUser, setKeyword, setRole, setStatus } from '../../redux/user/actions';
+import {
+  fetchUser,
+  setKeyword,
+  setRole,
+  setStatus,
+} from '../../redux/user/actions';
 import KAlert from '../../components/Alert';
 import Swal from 'sweetalert2';
 import { deleteData, putData } from '../../utils/fetch';
@@ -20,7 +25,7 @@ function User() {
 
   const notif = useSelector((state) => state.notif);
   const user = useSelector((state) => state.user);
-  
+
   const [access, setAccess] = useState({
     tambah: false,
     hapus: false,
@@ -64,11 +69,7 @@ function User() {
       if (result.isConfirmed) {
         const res = await deleteData(`/cms/user/${id}`);
         dispatch(
-          setNotif(
-            true,
-            'success',
-            `berhasil hapus user ${res.data.data.nama}`
-          )
+          setNotif(true, 'success', `Berhasil hapus user ${res.data.data.nama}`)
         );
         dispatch(fetchUser());
       }
@@ -96,7 +97,7 @@ function User() {
           setNotif(
             true,
             'success',
-            `berhasil ubah status user ${res.data.data.nama}`
+            `Berhasil ubah status user ${res.data.data.nama}`
           )
         );
 

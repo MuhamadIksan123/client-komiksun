@@ -108,7 +108,7 @@ function PaymentEdit() {
     const res = await putData(`/cms/payment/${paymentId}`, payload);
     if (res?.data?.data) {
       dispatch(
-        setNotif(true, 'success', `berhasil ubah payment ${res.data.data.type}`)
+        setNotif(true, 'success', `Berhasil ubah payment ${res.data.data.type}`)
       );
       navigate('/payment');
       setIsLoading(false);

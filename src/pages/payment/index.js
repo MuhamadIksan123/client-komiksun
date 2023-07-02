@@ -64,7 +64,7 @@ function PaymentPage() {
           setNotif(
             true,
             'success',
-            `berhasil hapus kategori ${res.data.data.type}`
+            `Berhasil hapus kategori ${res.data.data.type}`
           )
         );
 

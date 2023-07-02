@@ -175,7 +175,7 @@ function UserCreate() {
     const res = await putData(`/cms/user/${userId}`, payload);
     if (res?.data?.data) {
       dispatch(
-        setNotif(true, 'success', `berhasil ubah user ${res.data.data.nama}`)
+        setNotif(true, 'success', `Berhasil ubah user ${res.data.data.nama}`)
       );
 
       navigate('/user');

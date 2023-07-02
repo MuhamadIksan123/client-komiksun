@@ -62,7 +62,7 @@ function Genre() {
           setNotif(
             true,
             'success',
-            `berhasil hapus genre ${res.data.data.nama}`
+            `Berhasil hapus genre ${res.data.data.nama}`
           )
         );
         dispatch(fetchGenre());
@@ -75,10 +75,7 @@ function Genre() {
       <KBreadCrumb textSecound={'Genre'} />
 
       {access.tambah && (
-        <Button
-          className={'mb-3'}
-          action={() => navigate('/genre/create')}
-        >
+        <Button className={'mb-3'} action={() => navigate('/genre/create')}>
           Tambah
         </Button>
       )}

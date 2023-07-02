@@ -33,7 +33,7 @@ export default function ChapterForm({
             name="komik"
             value={form.komik}
             options={lists.komiks}
-            isClearable={true}
+            isClearable={false}
             handleChange={(e) => handleChange(e)}
           />
         </Col>
@@ -43,7 +43,7 @@ export default function ChapterForm({
         <Col>
           <TextInputWithLabel
             placeholder={'Masukan Avatar'}
-            label={'Cover'}
+            label={'File Komik *PDF'}
             name="document"
             // value={form.document}
             type="file"

@@ -32,11 +32,7 @@ function GenreCreate() {
     const res = await postData('/cms/genre', form);
     if (res?.data?.data) {
       dispatch(
-        setNotif(
-          true,
-          'success',
-          `berhasil tambah genre ${res.data.data.nama}`
-        )
+        setNotif(true, 'success', `Berhasil tambah genre ${res.data.data.nama}`)
       );
       navigate('/genre');
       setIsLoading(false);

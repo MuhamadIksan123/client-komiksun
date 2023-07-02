@@ -44,11 +44,7 @@ function GenreEdit() {
     const res = await putData(`/cms/genre/${genreId}`, form);
     if (res?.data?.data) {
       dispatch(
-        setNotif(
-          true,
-          'success',
-          `berhasil ubah genre ${res.data.data.nama}`
-        )
+        setNotif(true, 'success', `Berhasil ubah genre ${res.data.data.nama}`)
       );
       navigate('/genre');
       setIsLoading(false);

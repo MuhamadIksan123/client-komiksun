@@ -4,7 +4,11 @@ import KBreadcrumb from '../../components/Breadcrumb';
 import Table from '../../components/TableWithAction';
 import SearchInput from '../../components/SearchInput';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTransaksi, setPage, setDate } from '../../redux/transaksi/actions';
+import {
+  fetchTransaksi,
+  setPage,
+  setDate,
+} from '../../redux/transaksi/actions';
 import DateRange from '../../components/InputDate';
 import { formatDate } from '../../utils/formatDate';
 import Swal from 'sweetalert2';
@@ -13,9 +17,6 @@ import Button from '../../components/Button';
 import { accessTransaksi } from '../../const/access';
 import { setNotif } from '../../redux/notif/actions';
 import SAlert from '../../components/Alert';
-
-
-
 
 function OrderPage() {
   const dispatch = useDispatch();
@@ -54,10 +55,11 @@ function OrderPage() {
     dispatch(fetchTransaksi());
   }, [dispatch, transaksi.page, transaksi.date]);
 
-
   const displayDate = `${
     transaksi.date?.startDate ? formatDate(transaksi.date?.startDate) : ''
-  }${transaksi.date?.endDate ? ' - ' + formatDate(transaksi.date.endDate) : ''}`;
+  }${
+    transaksi.date?.endDate ? ' - ' + formatDate(transaksi.date.endDate) : ''
+  }`;
 
   const handleChangeStatus = (id, status) => {
     Swal.fire({
@@ -82,7 +84,7 @@ function OrderPage() {
           setNotif(
             true,
             'success',
-            `berhasil ubah status komik ${res.data.data.personalDetail.firstName} ${res.data.data.personalDetail.lastName}`
+            `Berhasil ubah status komik ${res.data.data.personalDetail.firstName} ${res.data.data.personalDetail.lastName}`
           )
         );
 
@@ -93,7 +95,7 @@ function OrderPage() {
 
   return (
     <Container className="mt-3">
-      <KBreadcrumb textSecound={'transaksi'} />
+      <KBreadcrumb textSecound={'Transaksi'} />
       <Row>
         <Col
           sm={4}

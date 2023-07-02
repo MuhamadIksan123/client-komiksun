@@ -46,15 +46,12 @@ export const accessPayment = {
 
 export const accessTransaksi = {
   lihat: ['admin', 'vendor', 'customer'],
-  tambah: ['admin', 'vendor', 'customer'],
-  edit: ['admin', 'vendor', 'customer'],
-  hapus: ['admin', 'vendor', 'customer'],
   status: ['admin'],
-  detail: ['admin'],
+  detail: ['admin', 'vendor'],
 };
 
 export const accessContact = {
   lihat: ['admin'],
   hapus: ['admin'],
-  detail: ['admin'],
+  detail: ['admin', 'vendor'],
 };

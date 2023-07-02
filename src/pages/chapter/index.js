@@ -10,13 +10,11 @@ import {
   fetchChapter,
   setKeyword,
   setKomik,
-  setStatus
+  setStatus,
 } from '../../redux/chapter/actions';
 import SAlert from '../../components/Alert';
 import Swal from 'sweetalert2';
-import { deleteData, putData, 
-  getBlob 
-} from '../../utils/fetch';
+import { deleteData, putData, getBlob } from '../../utils/fetch';
 import { setNotif } from '../../redux/notif/actions';
 import SelectBox from '../../components/SelectBox';
 import { fetchListKomiks } from '../../redux/lists/actions';
@@ -34,7 +32,7 @@ function ChapterPage() {
     tambah: false,
     hapus: false,
     edit: false,
-    status: false,  
+    status: false,
   });
 
   const checkAccess = () => {
@@ -80,7 +78,7 @@ function ChapterPage() {
           setNotif(
             true,
             'success',
-            `berhasil hapus speaker ${res.data.data.judul}`
+            `Berhasil hapus speaker ${res.data.data.judul}`
           )
         );
 
@@ -91,7 +89,7 @@ function ChapterPage() {
 
   const handleChangeStatus = (id, status) => {
     Swal.fire({
-      judul: 'Apa kamu yakin?',
+      title: 'Apa kamu yakin?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -111,7 +109,7 @@ function ChapterPage() {
           setNotif(
             true,
             'success',
-            `berhasil ubah status chapter ${res.data.data.judul}`
+            `Berhasil ubah status chapter ${res.data.data.judul}`
           )
         );
         dispatch(fetchChapter());
@@ -159,7 +157,7 @@ function ChapterPage() {
         </Col>
         <Col>
           <SelectBox
-            placeholder={'Masukan pencarian kategori'}
+            placeholder={'Masukan pencarian komik'}
             name="komik"
             value={chapter.komik}
             options={lists.komiks}

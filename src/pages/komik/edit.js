@@ -189,7 +189,7 @@ function KomikEdit() {
     const res = await putData(`/cms/komik/${komikId}`, payload);
     if (res?.data?.data) {
       dispatch(
-        setNotif(true, 'success', `berhasil ubah komik ${res.data.data.judul}`)
+        setNotif(true, 'success', `Berhasil ubah komik ${res.data.data.judul}`)
       );
       navigate('/komik');
       setIsLoading(false);

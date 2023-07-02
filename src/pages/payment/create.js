@@ -94,7 +94,7 @@ function PaymentCreate() {
         setNotif(
           true,
           'success',
-          `berhasil tambah payment ${res.data.data.type}`
+          `Berhasil tambah payment ${res.data.data.type}`
         )
       );
       navigate('/payment');

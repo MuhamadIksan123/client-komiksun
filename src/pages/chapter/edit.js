@@ -120,11 +120,7 @@ function ChaptersCreate() {
     const res = await putData(`/cms/chapter/${chapterId}`, payload);
     if (res?.data?.data) {
       dispatch(
-        setNotif(
-          true,
-          'success',
-          `berhasil ubah judul ${res.data.data.judul}`
-        )
+        setNotif(true, 'success', `Berhasil ubah judul ${res.data.data.judul}`)
       );
 
       navigate('/chapter');

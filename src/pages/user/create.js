@@ -158,7 +158,7 @@ function UserCreate() {
 
     if (res?.data?.data) {
       dispatch(
-        setNotif(true, 'success', `berhasil tambah user ${res.data.data.nama}`)
+        setNotif(true, 'success', `Berhasil tambah user ${res.data.data.nama}`)
       );
       navigate('/user');
       setIsLoading(false);

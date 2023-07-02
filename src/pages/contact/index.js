@@ -4,15 +4,9 @@ import KBreadcrumb from '../../components/Breadcrumb';
 import Table from '../../components/TableWithAction';
 import SearchInput from '../../components/SearchInput';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  fetchContact,
-  setPage,
-  setDate,
-} from '../../redux/contact/actions';
+import { fetchContact, setPage, setDate } from '../../redux/contact/actions';
 import DateRange from '../../components/InputDate';
 import { formatDate } from '../../utils/formatDate';
-
-import Button from '../../components/Button';
 import KAlert from '../../components/Alert';
 import Swal from 'sweetalert2';
 import { deleteData } from '../../utils/fetch';
@@ -29,7 +23,7 @@ function OrderPage() {
 
   const [access, setAccess] = useState({
     hapus: false,
-    detail: false
+    detail: false,
   });
 
   const checkAccess = () => {
@@ -70,7 +64,7 @@ function OrderPage() {
           setNotif(
             true,
             'success',
-            `berhasil hapus contact ${res.data.data.nama}`
+            `Berhasil hapus contact ${res.data.data.nama}`
           )
         );
         dispatch(fetchContact());
@@ -80,13 +74,11 @@ function OrderPage() {
 
   const displayDate = `${
     contact.date?.startDate ? formatDate(contact.date?.startDate) : ''
-  }${
-    contact.date?.endDate ? ' - ' + formatDate(contact.date.endDate) : ''
-  }`;
+  }${contact.date?.endDate ? ' - ' + formatDate(contact.date.endDate) : ''}`;
 
   return (
     <Container className="mt-3">
-      <KBreadcrumb textSecound={'contact'} />
+      <KBreadcrumb textSecound={'Contact'} />
       <Row>
         <Col
           sm={4}

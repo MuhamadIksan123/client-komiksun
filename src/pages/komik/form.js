@@ -70,7 +70,7 @@ export default function KomikForm({
             name="status"
             value={form.status}
             options={stat}
-            isClearable={true}
+            isClearable={false}
             handleChange={(e) => handleChange(e)}
           />
         </Col>
@@ -117,7 +117,7 @@ export default function KomikForm({
             name="jenis"
             value={form.jenis}
             options={jenisKomik}
-            isClearable={true}
+            isClearable={false}
             handleChange={(e) => handleChange(e)}
           />
         </Col>

@@ -31,7 +31,7 @@ function KomikCreate() {
     type: '',
     message: '',
   });
-  
+
   let stat = [
     {
       value: 'Ongoing',
@@ -152,7 +152,7 @@ function KomikCreate() {
       jenis: form.jenis.value,
       rilis: form.rilis,
       genre: form.genre.value,
-      image: form.file,
+      image: form?.file,
     };
 
     const res = await postData('/cms/komik', payload);
@@ -162,7 +162,7 @@ function KomikCreate() {
         setNotif(
           true,
           'success',
-          `berhasil tambah komik ${res.data.data.judul}`
+          `Berhasil tambah komik ${res.data.data.judul}`
         )
       );
       navigate('/komik');

@@ -85,7 +85,7 @@ function KomikPage() {
           setNotif(
             true,
             'success',
-            `berhasil hapus speaker ${res.data.data.judul}`
+            `Berhasil hapus speaker ${res.data.data.judul}`
           )
         );
 
@@ -115,7 +115,7 @@ function KomikPage() {
           setNotif(
             true,
             'success',
-            `berhasil ubah status komik ${res.data.data.judul}`
+            `Berhasil ubah status komik ${res.data.data.judul}`
           )
         );
 
@@ -185,9 +185,9 @@ function KomikPage() {
       )}
       <Table
         status={komik.status}
-        thead={['Judul', 'Status', 'Genre', 'Rilis', 'Avatar', 'Aksi']}
+        thead={['Judul', 'Status', 'Genre', 'Harga', 'Rilis', 'Avatar', 'Aksi']}
         data={komik.data}
-        tbody={['judul', 'statusKomik', 'genreName', 'date', 'avatar']}
+        tbody={['judul', 'statusKomik', 'genreName', 'harga', 'date', 'avatar']}
         detailUrl={access.detail ? `/komik/detail` : null}
         editUrl={access.edit ? `/komik/edit` : null}
         deleteAction={access.hapus ? (id) => handleDelete(id) : null}

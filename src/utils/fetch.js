@@ -36,7 +36,7 @@ export async function getBlob(url, params) {
         responseType: 'blob',
       })
       .then((response) => {
-        // Logika untuk menangani respons yang berhasil
+        // Logika untuk menangani respons yang Berhasil
         console.log(response.data);
         const blob = response.data; // Mengakses objek Blob dari respons
         // Contoh tindakan:
