@@ -23,7 +23,6 @@ function TransaksiDetail() {
 
   const fetchOneTransaksi = async () => {
     const res = await getData(`/cms/transaksi/${transaksiId}`);
-    console.log(res.data.data[0])
 
     setForm({
       ...form,
@@ -40,9 +39,7 @@ function TransaksiDetail() {
       nomor: res.data.data[0].payment.nomor,
     });
   };
-
-  console.log(form);
-
+  
   useEffect(() => {
     fetchOneTransaksi();
     // eslint-disable-next-line react-hooks/exhaustive-deps

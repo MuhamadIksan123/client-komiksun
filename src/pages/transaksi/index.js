@@ -78,7 +78,6 @@ function OrderPage() {
         };
         const res = await putData(`/cms/transaksi/${id}/status`, payload);
 
-        console.log(res);
 
         dispatch(
           setNotif(

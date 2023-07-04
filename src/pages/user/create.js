@@ -81,7 +81,6 @@ function UserCreate() {
 
   const handleChange = async (e) => {
     const _temp = Array.isArray(e) ? e : null;
-    console.log(_temp);
     if (Array.isArray(e)) e = e[0];
 
     if (e?.target?.name === 'avatar') {
