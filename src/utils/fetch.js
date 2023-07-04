@@ -17,6 +17,8 @@ export async function getData(url, params) {
 
     return res;
   } catch (err) {
+    console.log('ERROR');
+    console.log(err);
     return handleError(err);
   }
 }
@@ -35,6 +37,7 @@ export async function getBlob(url, params) {
       })
       .then((response) => {
         // Logika untuk menangani respons yang Berhasil
+        console.log(response.data);
         const blob = response.data; // Mengakses objek Blob dari respons
         // Contoh tindakan:
         // 1. Menyimpan objek Blob ke sistem file lokal
@@ -43,10 +46,12 @@ export async function getBlob(url, params) {
       })
       .catch((error) => {
         // Tangani kesalahan yang terjadi
+        console.log('ERROR 1');
         console.error(error);
       });
-    // return res;
+    return res;
   } catch (err) {
+    console.log('ERROR');
     return handleError(err);
   }
 }
@@ -82,6 +87,7 @@ export async function postData(url, payload, formData) {
 
     return res;
   } catch (err) {
+    console.log(err);
     return handleError(err);
   }
 }
@@ -130,6 +136,7 @@ export async function downloadData(url, params) {
 
     return res;
   } catch (err) {
+    console.log(err);
     return handleError(err);
   }
 }
