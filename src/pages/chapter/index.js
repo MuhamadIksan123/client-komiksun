@@ -62,7 +62,7 @@ function ChapterPage() {
 
   const handleDelete = (id) => {
     Swal.fire({
-      judul: 'Apa kamu yakin?',
+      title: 'Apa kamu yakin?',
       text: 'Anda tidak akan dapat mengembalikan ini!',
       icon: 'warning',
       showCancelButton: true,

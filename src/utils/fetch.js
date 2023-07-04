@@ -24,6 +24,7 @@ export async function getData(url, params) {
 }
 
 export async function getBlob(url, params) {
+  console.log(`${config.api_host_dev}${url}`);
   try {
     const { token } = localStorage.getItem('auth')
       ? JSON.parse(localStorage.getItem('auth'))
