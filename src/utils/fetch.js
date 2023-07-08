@@ -23,35 +23,25 @@ export async function getData(url, params) {
   }
 }
 
-export async function getBlob(url, params) {
+export async function getBlob(url) {
   try {
     const { token } = localStorage.getItem('auth')
       ? JSON.parse(localStorage.getItem('auth'))
       : {};
-    const res = await axios
-      .get(`${config.api_host_dev}${url}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        responseType: 'blob',
-      })
-      .then((response) => {
-        // Logika untuk menangani respons yang Berhasil
-        console.log(response.data);
-        const blob = response.data; // Mengakses objek Blob dari respons
-        // Contoh tindakan:
-        // 1. Menyimpan objek Blob ke sistem file lokal
-        const filename = 'file.pdf';
-        saveBlobToFile(blob, filename);
-      })
-      .catch((error) => {
-        // Tangani kesalahan yang terjadi
-        console.log('ERROR 1');
-        console.error(error);
-      });
-    return res;
+    const response = await fetch(`${config.api_host_dev}${url}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Request failed');
+    }
+    const blob = await response.blob();
+    const filename = 'file.pdf';
+
+    saveBlobToFile(blob, filename);
   } catch (err) {
-    console.log('ERROR');
+    console.error(err);
     return handleError(err);
   }
 }

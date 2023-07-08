@@ -118,6 +118,7 @@ function ChapterPage() {
   };
 
   const handleDownload = (id) => {
+    console.log('KLIK');
     getBlob(`/cms/files/${id}`);
   };
 
