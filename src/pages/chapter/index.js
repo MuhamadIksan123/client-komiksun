@@ -34,6 +34,7 @@ function ChapterPage() {
     edit: false,
     status: false,
   });
+  const [loading, setLoading] = useState(false);
 
   const checkAccess = () => {
     let { role } = localStorage.getItem('auth')
@@ -118,8 +119,17 @@ function ChapterPage() {
   };
 
   const handleDownload = (id) => {
-    console.log('KLIK');
-    getBlob(`/cms/files/${id}`);
+    try {
+      setLoading(true);
+      console.log('KLIK');
+      getBlob(`/cms/files/${id}`, setLoading);
+
+      // Code untuk mendownload file (misalnya menggunakan fetch atau axios)
+      // ...
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
   };
 
   let stat = [
@@ -177,6 +187,7 @@ function ChapterPage() {
           />
         </Col>
       </Row>
+      {/* {loading && <div className="loader">Loading...</div>} */}
 
       {notif.status && (
         <SAlert type={notif.typeNotif} message={notif.message} />
@@ -217,6 +228,7 @@ function ChapterPage() {
             : null
         }
         withoutPagination
+        loading={loading}
       />
     </Container>
   );

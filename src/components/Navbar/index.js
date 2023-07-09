@@ -10,7 +10,7 @@ import {
   accessChapter,
   accessPayment,
   accessTransaksi,
-  accessContact
+  accessContact,
 } from '../../const/access';
 
 function KNavbar() {
@@ -29,8 +29,13 @@ function KNavbar() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.clear();
-    window.location.href = '/login';
+    if (process.env.REACT_APP_HOST_DEV === 'http://localhost:9000/api/v1') {
+      localStorage.clear();
+      window.location.href = '/login';
+    } else {
+      localStorage.clear();
+      window.location.href = 'https://landingpage-komiksun.vercel.app/';
+    }
   };
 
   return (

@@ -29,6 +29,7 @@ function ChaptersCreate() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchOneChapter = async () => {
     const res = await getData(`/cms/chapter/${chapterId}`);
@@ -137,7 +138,14 @@ function ChaptersCreate() {
   };
 
   const handleDownload = (id) => {
-    getBlob(`/cms/files/${id}`);
+    try {
+      setLoading(true);
+      console.log('KLIK');
+      getBlob(`/cms/files/${id}`, setLoading);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -164,7 +172,7 @@ function ChaptersCreate() {
                 size={'md'}
                 action={() => handleDownload(id)}
               >
-                Check File PDF
+                {loading ? `Loading...` : `Check File PDF`}
               </Button>
             </div>
           );

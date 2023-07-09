@@ -14,11 +14,12 @@ function TbodyWithAction({
   actionNotDisplay,
   downloadAction,
   status,
+  loading
 }) {
   const navigate = useNavigate();
   return (
     <tbody>
-      {status === 'process' ? (
+      {status === 'process' || loading ? (
         <tr>
           <td colSpan={display.length + 1} style={{ textAlign: 'center' }}>
             <div className="flex items-centerjustify-center">

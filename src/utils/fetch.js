@@ -23,26 +23,31 @@ export async function getData(url, params) {
   }
 }
 
-export async function getBlob(url) {
+export async function getBlob(url, setLoading) {
   try {
     const { token } = localStorage.getItem('auth')
       ? JSON.parse(localStorage.getItem('auth'))
       : {};
+
     const response = await fetch(`${config.api_host_dev}${url}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+
     if (!response.ok) {
       throw new Error('Request failed');
     }
+
     const blob = await response.blob();
     const filename = 'file.pdf';
 
     saveBlobToFile(blob, filename);
-  } catch (err) {
-    console.error(err);
-    return handleError(err);
+  } catch (error) {
+    console.error(error);
+    return handleError(error);
+  } finally {
+    setLoading(false);
   }
 }
 

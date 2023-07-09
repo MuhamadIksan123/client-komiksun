@@ -18,6 +18,7 @@ function TableWithAction({
   pages,
   downloadAction,
   detailUrl,
+  loading
 }) {
   return (
     <>
@@ -33,6 +34,7 @@ function TableWithAction({
           customAction={customAction}
           downloadAction={downloadAction}
           detailUrl={detailUrl}
+          loading={loading}
         />
       </Table>
       {!withoutPagination && data.length ? (
