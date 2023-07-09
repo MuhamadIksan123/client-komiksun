@@ -10,7 +10,7 @@ function App() {
   }, []);
   useEffect(() => {
     const handleMessage = (event) => {
-      if (event.origin === 'https://landingpage-komiksun.vercel.app') {
+      if (event.origin === 'https://landingpage-komiksun.vercel.app/signin') {
         const authData = JSON.parse(event.data);
         localStorage.setItem('auth', JSON.stringify(authData));
         // Lakukan langkah selanjutnya di halaman ini
