@@ -8,21 +8,15 @@ function App() {
   useEffect(() => {
     listen();
   }, []);
-  useEffect(() => {
-    const handleMessage = (event) => {
-      if (event.origin === 'https://landingpage-komiksun.vercel.app/signin') {
-        const authData = JSON.parse(event.data);
-        localStorage.setItem('auth', JSON.stringify(authData));
-        // Lakukan langkah selanjutnya di halaman ini
-      }
-    };
 
-    window.addEventListener('message', handleMessage);
+  window.addEventListener('message', (event) => {
+    if (event.origin === 'https://landingpage-komiksun.vercel.app') {
+      const authData = JSON.parse(event.data);
+      localStorage.setItem('auth', JSON.stringify(authData));
+      // Lakukan langkah selanjutnya di halaman ini
+    }
+  });
 
-    return () => {
-      window.removeEventListener('message', handleMessage);
-    };
-  }, []);
   return (
     <>
       <BrowserRouter>
