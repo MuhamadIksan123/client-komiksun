@@ -10,20 +10,22 @@ function App() {
   }, []);
 
  useEffect(() => {
-   const handleMessage = (event) => {
-     if (event.data.type === 'authData') {
-       const authData = event.data.data;
-       localStorage.setItem('auth', JSON.stringify(authData));
-     }
-   };
+   const urlParams = new URLSearchParams(window.location.search);
+   const token = urlParams.get('token');
+   const email = urlParams.get('email');
+   const role = urlParams.get('role');
+   const refreshToken = urlParams.get('refreshToken');
 
-   // Tambahkan event listener untuk pesan yang dikirim
-   window.addEventListener('message', handleMessage);
+   if (token && email && role && refreshToken) {
+     const authData = {
+       token,
+       email,
+       role,
+       refreshToken,
+     };
 
-   return () => {
-     // Bersihkan event listener saat komponen dilepas
-     window.removeEventListener('message', handleMessage);
-   };
+     localStorage.setItem('auth', JSON.stringify(authData));
+   }
  }, []);
 
 
