@@ -16,14 +16,14 @@ import { TransaksiRoute } from './TransaksiRoutes';
 export function AppRoutes() {
   return (
     <Routes>
-      {/* <Route
+      <Route
         path="login"
         element={
           <GuestOnlyRoute>
             <Login />
           </GuestOnlyRoute>
         }
-      /> */}
+      />
       <Route
         path="/"
         element={

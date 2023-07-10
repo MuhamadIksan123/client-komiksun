@@ -5,9 +5,9 @@ import { listen } from './redux/listener';
 import { AppRoutes } from './routes';
 
 function App() {
-  // useEffect(() => {
-  //   listen();
-  // }, []);
+  useEffect(() => {
+    listen();
+  }, []);
 
  useEffect(() => {
    const urlParams = new URLSearchParams(window.location.search);
