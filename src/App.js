@@ -9,13 +9,22 @@ function App() {
     listen();
   }, []);
 
-  window.addEventListener('message', (event) => {
-    if (event.origin === 'https://landingpage-komiksun.vercel.app') {
-      const authData = JSON.parse(event.data);
-      localStorage.setItem('auth', JSON.stringify(authData));
-      // Lakukan langkah selanjutnya di halaman ini
-    }
-  });
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.origin === 'https://landingpage-komiksun.vercel.app') {
+        const authData = JSON.parse(event.data);
+        localStorage.setItem('auth', JSON.stringify(authData));
+        // Lakukan langkah selanjutnya di halaman ini
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+
 
   return (
     <>
