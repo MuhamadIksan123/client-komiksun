@@ -5,9 +5,9 @@ import { listen } from './redux/listener';
 import { AppRoutes } from './routes';
 
 function App() {
-  useEffect(() => {
-    listen();
-  }, []);
+  // useEffect(() => {
+  //   listen();
+  // }, []);
 
  useEffect(() => {
    const urlParams = new URLSearchParams(window.location.search);
@@ -25,6 +25,8 @@ function App() {
      };
 
      localStorage.setItem('auth', JSON.stringify(authData));
+   } else {
+     window.location.href = 'https://landingpage-komiksun.vercel.app/signin';
    }
  }, []);
 
