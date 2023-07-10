@@ -12,6 +12,8 @@ export default function GuestOnlyRoute({ children }) {
     const role = urlParams.get('role');
     const refreshToken = urlParams.get('refreshToken');
 
+    console.log(token, role, refreshToken, email);
+
     if (token && email && role && refreshToken) {
       // Memanggil fungsi userLogin dengan parameter yang diterima
       userLogin(token, role, refreshToken, email);
