@@ -11,17 +11,21 @@ function App() {
 
  useEffect(() => {
    const handleMessage = (event) => {
-     if (event.origin !== 'https://landingpage-komiksun.vercel.app') return; // Memastikan hanya menerima pesan dari URL yang diharapkan
+     if (event.origin !== 'https://landingpage-komiksun.vercel.app') {
+       return; // Jika pesan bukan dari halaman yang diizinkan, abaikan
+     }
 
-     if (event.data.type === 'AUTH_DATA') {
+     if (event.data.type === 'authData') {
        const authData = event.data.data;
        localStorage.setItem('auth', JSON.stringify(authData));
      }
    };
 
+   // Tambahkan event listener untuk pesan yang dikirim
    window.addEventListener('message', handleMessage);
 
    return () => {
+     // Bersihkan event listener saat komponen dilepas
      window.removeEventListener('message', handleMessage);
    };
  }, []);
