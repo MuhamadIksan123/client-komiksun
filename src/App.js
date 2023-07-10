@@ -5,16 +5,12 @@ import { listen } from './redux/listener';
 import { AppRoutes } from './routes';
 
 function App() {
-  // useEffect(() => {
-  //   listen();
-  // }, []);
+  useEffect(() => {
+    listen();
+  }, []);
 
  useEffect(() => {
    const handleMessage = (event) => {
-     if (event.origin !== 'https://landingpage-komiksun.vercel.app') {
-       return; // Jika pesan bukan dari halaman yang diizinkan, abaikan
-     }
-
      if (event.data.type === 'authData') {
        const authData = event.data.data;
        localStorage.setItem('auth', JSON.stringify(authData));
