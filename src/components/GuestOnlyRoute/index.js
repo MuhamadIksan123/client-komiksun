@@ -5,7 +5,7 @@ import { userLogin } from '../../redux/auth/actions';
 
 
 export default function GuestOnlyRoute({ children }) {
-  useEffect(() => {
+  React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
     const email = urlParams.get('email');
