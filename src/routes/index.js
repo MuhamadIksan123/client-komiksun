@@ -17,24 +17,21 @@ import KNavbar from '../components/Navbar';
 import { TransaksiRoute } from './TransaksiRoutes';
 
 export function AppRoutes() {
-  const dispatch = useDispatch();
-  const [searchParams] = useSearchParams();
-  useEffect(() => {
-    const token = searchParams.get('token');
-    const email = searchParams.get('email');
-    const role = searchParams.get('role');
-    const refreshToken = searchParams.get('refreshToken');
+  // const dispatch = useDispatch();
+  // const [searchParams] = useSearchParams();
+  // useEffect(() => {
+  //   const token = searchParams.get('token');
+  //   const email = searchParams.get('email');
+  //   const role = searchParams.get('role');
+  //   const refreshToken = searchParams.get('refreshToken');
 
-    console.log(token, role, refreshToken, email);
+  //   console.log(token, role, refreshToken, email);
 
-    if (token && email && role && refreshToken) {
-      // Memanggil fungsi userLogin dengan parameter yang diterima
-      dispatch(userLogin(token, role, refreshToken, email));
-    }
-    // const paramValue = searchParams.get('nama');
-    // console.log(paramValue);
-    // console.log('test app.js');
-  }, [dispatch, searchParams]);
+  //   if (token && email && role && refreshToken) {
+  //     // Memanggil fungsi userLogin dengan parameter yang diterima
+  //     dispatch(userLogin(token, role, refreshToken, email));
+  //   }
+  // }, [dispatch, searchParams]);
   return (
     <Routes>
       <Route
