@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Card } from 'react-bootstrap';
 import KAlert from '../../components/Alert';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import SForm from './form';
-import {postData} from '../../utils/fetch';
-import {useDispatch} from 'react-redux';
-import {userLogin} from '../../redux/auth/actions';
-
+import { postData } from '../../utils/fetch';
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../../redux/auth/actions';
 
 export default function PageSignin() {
   const dispatch = useDispatch();
@@ -46,8 +45,7 @@ export default function PageSignin() {
   const handleSubmit = async () => {
     setIsLoading(true);
     const res = await postData('/cms/auth/signin', form);
-    if(res?.data?.data) {
-
+    if (res?.data?.data) {
       dispatch(
         userLogin(
           res.data.data.token,
@@ -76,8 +74,13 @@ export default function PageSignin() {
       </div>
       <Card style={{ width: '50%' }} className="m-auto mt-5">
         <Card.Body>
-          <Card.Title className='text-center'>Login</Card.Title>
-          <SForm form={form} handleChange={handleChange} handleSubmit={handleSubmit} isLoading={isLoading} />
+          <Card.Title className="text-center">Login</Card.Title>
+          <SForm
+            form={form}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            isLoading={isLoading}
+          />
         </Card.Body>
       </Card>
     </Container>
