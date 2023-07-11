@@ -4,14 +4,16 @@ import { BrowserRouter } from 'react-router-dom';
 import { listen } from './redux/listener';
 import { AppRoutes } from './routes';
 import { userLogin } from './redux/auth/actions';
-
+import { useLocation } from 'react-router-dom';
 
 function App() {
+  const location = useLocation();
+
   useEffect(() => {
     listen();
   }, []);
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(location.search);
     const token = urlParams.get('token');
     const email = urlParams.get('email');
     const role = urlParams.get('role');
