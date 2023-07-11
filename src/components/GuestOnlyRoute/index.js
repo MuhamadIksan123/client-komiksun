@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import { userLogin } from '../redux/auth/actions';
+import { userLogin } from '../../redux/auth/actions';
 
 export default function GuestOnlyRoute({ children }) {
   const dispatch = useDispatch();
