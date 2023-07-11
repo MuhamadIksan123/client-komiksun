@@ -7,6 +7,12 @@ function listener() {
 
   currentAuth = store.getState().auth;
 
+  console.log('previousAuth');
+  console.log(previousAuth);
+
+  console.log('currentAuth');
+  console.log(currentAuth);
+
   if (currentAuth !== previousAuth) {
     localStorage.setItem('auth', JSON.stringify(currentAuth));
   }
