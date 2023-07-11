@@ -30,6 +30,9 @@ export function AppRoutes() {
     if (token && email && role && refreshToken) {
       // Memanggil fungsi userLogin dengan parameter yang diterima
       dispatch(userLogin(token, role, refreshToken, email));
+
+      const authData = { token, role, refreshToken, email };
+      localStorage.setItem('auth', JSON.stringify(authData));
     }
     // const paramValue = searchParams.get('nama');
     // console.log(paramValue);
