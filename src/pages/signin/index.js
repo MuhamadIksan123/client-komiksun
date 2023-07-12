@@ -22,8 +22,8 @@ export default function PageSignin() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-
   const [searchParams] = useSearchParams();
+
   useEffect(() => {
     const token = searchParams.get('token');
     const email = searchParams.get('email');
@@ -33,6 +33,9 @@ export default function PageSignin() {
     if (token && email && role && refreshToken) {
       // Memanggil fungsi userLogin dengan parameter yang diterima
       dispatch(userLogin(token, role, refreshToken, email));
+
+      authData = { token, email, role, refreshToken };
+      localStorage.setItem('auth', JSON.stringify(authData));
     }
   }, [dispatch, searchParams]);
 
