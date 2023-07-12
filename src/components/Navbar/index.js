@@ -13,16 +13,6 @@ import {
   accessContact,
 } from '../../const/access';
 
-// console.log(accessHome.lihat);
-// console.log(accessUser.lihat);
-// console.log(accessGenre.lihat);
-// console.log(accessKomik.lihat);
-// console.log(accessKomik.lihat);
-// console.log(accessChapter.lihat);
-// console.log(accessPayment.lihat);
-// console.log(accessTransaksi.lihat);
-// console.log(accessTransaksi.lihat);
-
 function KNavbar() {
   const navigate = useNavigate();
   const [role, setRole] = useState(null);
@@ -34,6 +24,9 @@ function KNavbar() {
         : {};
 
       role = 'vendor';
+
+      console.log("localStorage.getItem('auth')");
+      console.log(localStorage.getItem('auth'));
 
       console.log('Tampilkan role');
       console.log(role);

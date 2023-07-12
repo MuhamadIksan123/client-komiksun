@@ -25,8 +25,6 @@ export function AppRoutes() {
     const role = searchParams.get('role');
     const refreshToken = searchParams.get('refreshToken');
 
-    console.log(token, role, refreshToken, email);
-
     if (token && email && role && refreshToken) {
       // Memanggil fungsi userLogin dengan parameter yang diterima
       dispatch(userLogin(token, role, refreshToken, email));
