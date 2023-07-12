@@ -28,11 +28,6 @@ export function AppRoutes() {
     if (token && email && role && refreshToken) {
       // Memanggil fungsi userLogin dengan parameter yang diterima
       dispatch(userLogin(token, role, refreshToken, email));
-
-      localStorage.setItem(
-        'auth',
-        JSON.stringify({ token, email, role, refreshToken })
-      );
     }
   }, [dispatch, searchParams]);
   return (

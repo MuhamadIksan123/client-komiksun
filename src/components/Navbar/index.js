@@ -23,8 +23,6 @@ function KNavbar() {
         ? JSON.parse(localStorage.getItem('auth'))
         : {};
 
-      role = 'vendor';
-
       console.log("localStorage.getItem('auth')");
       console.log(localStorage.getItem('auth'));
 
