@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card } from 'react-bootstrap';
 import KAlert from '../../components/Alert';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SForm from './form';
 import { postData } from '../../utils/fetch';
 import { useDispatch } from 'react-redux';
@@ -22,22 +22,7 @@ export default function PageSignin() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [searchParams] = useSearchParams();
-
-  useEffect(() => {
-    const token = searchParams.get('token');
-    const email = searchParams.get('email');
-    const role = searchParams.get('role');
-    const refreshToken = searchParams.get('refreshToken');
-
-    if (token && email && role && refreshToken) {
-      // Memanggil fungsi userLogin dengan parameter yang diterima
-      dispatch(userLogin(token, role, refreshToken, email));
-
-      authData = { token, email, role, refreshToken };
-      localStorage.setItem('auth', JSON.stringify(authData));
-    }
-  }, [dispatch, searchParams]);
+  
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
