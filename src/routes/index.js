@@ -1,9 +1,11 @@
-import { Navigate, Route, Routes, useSearchParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Navigate, Route, Routes,
+  //  useSearchParams 
+  } from 'react-router-dom';
+// import { useEffect } from 'react';
 import GuardRoute from '../components/GuardRoute';
 import GuestOnlyRoute from '../components/GuestOnlyRoute';
-import { userLogin } from '../redux/auth/actions';
-import { useDispatch } from 'react-redux';
+// import { userLogin } from '../redux/auth/actions';
+// import { useDispatch } from 'react-redux';
 
 import Login from '../pages/signin';
 import { HomeRoute } from './HomeRoutes';
@@ -17,19 +19,19 @@ import KNavbar from '../components/Navbar';
 import { TransaksiRoute } from './TransaksiRoutes';
 
 export function AppRoutes() {
-  const dispatch = useDispatch();
-  const [searchParams] = useSearchParams();
-  useEffect(() => {
-    const token = searchParams.get('token');
-    const email = searchParams.get('email');
-    const role = searchParams.get('role');
-    const refreshToken = searchParams.get('refreshToken');
+  // const dispatch = useDispatch();
+  // const [searchParams] = useSearchParams();
+  // useEffect(() => {
+  //   const token = searchParams.get('token');
+  //   const email = searchParams.get('email');
+  //   const role = searchParams.get('role');
+  //   const refreshToken = searchParams.get('refreshToken');
 
-    if (token && email && role && refreshToken) {
-      // Memanggil fungsi userLogin dengan parameter yang diterima
-      dispatch(userLogin(token, role, refreshToken, email));
-    }
-  }, [dispatch, searchParams]);
+  //   if (token && email && role && refreshToken) {
+  //     // Memanggil fungsi userLogin dengan parameter yang diterima
+  //     dispatch(userLogin(token, role, refreshToken, email));
+  //   }
+  // }, [dispatch, searchParams]);
   return (
     <Routes>
       <Route

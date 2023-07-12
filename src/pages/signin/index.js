@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Card } from 'react-bootstrap';
 import KAlert from '../../components/Alert';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import SForm from './form';
 import { postData } from '../../utils/fetch';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '../../redux/auth/actions';
+import store from '../../redux/store';
 
 export default function PageSignin() {
   const dispatch = useDispatch();
@@ -22,6 +23,29 @@ export default function PageSignin() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const token = searchParams.get('token');
+    const email = searchParams.get('email');
+    const role = searchParams.get('role');
+    const refreshToken = searchParams.get('refreshToken');
+
+    if (token && email && role && refreshToken) {
+      // Memanggil fungsi userLogin dengan parameter yang diterima
+      dispatch(userLogin(token, role, refreshToken, email));
+    }
+
+    let currentAuth;
+    let previousAuth = currentAuth;
+
+    currentAuth = store.getState().auth;
+
+    if (currentAuth !== previousAuth) {
+      localStorage.setItem('auth', JSON.stringify(currentAuth));
+    }
+  }, [dispatch, searchParams]);
   
 
   const handleChange = (e) => {
