@@ -6,7 +6,6 @@ import { AppRoutes } from './routes';
 
 function App() {
   useEffect(() => {
-    console.log(listen);
     listen();
   }, []);
   return (

@@ -13,6 +13,16 @@ import {
   accessContact,
 } from '../../const/access';
 
+// console.log(accessHome.lihat);
+// console.log(accessUser.lihat);
+// console.log(accessGenre.lihat);
+// console.log(accessKomik.lihat);
+// console.log(accessKomik.lihat);
+// console.log(accessChapter.lihat);
+// console.log(accessPayment.lihat);
+// console.log(accessTransaksi.lihat);
+// console.log(accessTransaksi.lihat);
+
 function KNavbar() {
   const navigate = useNavigate();
   const [role, setRole] = useState(null);
@@ -23,6 +33,12 @@ function KNavbar() {
         ? JSON.parse(localStorage.getItem('auth'))
         : {};
 
+      console.log('Tampilkan role');
+      console.log(role);
+
+      console.log('Tampilkan localStorage');
+      console.log(localStorage);
+
       setRole(role);
     };
     fetchData();
@@ -31,10 +47,10 @@ function KNavbar() {
   const handleLogout = () => {
     if (process.env.REACT_APP_HOST_DEV === 'http://localhost:9000/api/v1') {
       localStorage.clear();
-      window.location.href = '/login';
+      window.location.href = 'http://localhost:8080/signin';
     } else {
       localStorage.clear();
-      window.location.href = 'https://landingpage-komiksun.vercel.app/';
+      window.location.href = 'https://landingpage-komiksun.vercel.app/signin';
     }
   };
 
