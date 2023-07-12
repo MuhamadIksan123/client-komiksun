@@ -33,6 +33,8 @@ function KNavbar() {
         ? JSON.parse(localStorage.getItem('auth'))
         : {};
 
+      role = 'vendor';
+
       console.log('Tampilkan role');
       console.log(role);
 
