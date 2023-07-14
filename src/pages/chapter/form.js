@@ -24,6 +24,7 @@ export default function ChapterForm({
             value={form.judul}
             type="text"
             onChange={handleChange}
+            disabled={isLoading} // Menonaktifkan input file saat sedang loading
           />
         </Col>
         <Col>
@@ -34,6 +35,7 @@ export default function ChapterForm({
             value={form.komik}
             options={lists.komiks}
             isClearable={false}
+            disabled={isLoading} // Menonaktifkan input file saat sedang loading
             handleChange={(e) => handleChange(e)}
           />
         </Col>
@@ -48,6 +50,7 @@ export default function ChapterForm({
             // value={form.document}
             type="file"
             onChange={handleChange}
+            disabled={isLoading} // Menonaktifkan input file saat sedang loading
           />
           {form.document !== '' && (
             <>{customAction && customAction(form.file)}</>
@@ -56,7 +59,12 @@ export default function ChapterForm({
         <Col></Col>
       </Row>
 
-      <Button variant="primary" action={handleSubmit} loading={isLoading}>
+      <Button
+        variant="primary"
+        action={handleSubmit}
+        loading={isLoading}
+        disabled={isLoading}
+      >
         {edit ? 'Ubah' : 'Simpan'}
       </Button>
     </Form>

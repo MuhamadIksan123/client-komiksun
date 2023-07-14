@@ -66,9 +66,9 @@ function ChaptersCreate() {
   const handleChange = async (e) => {
     if (e.target.name === 'document') {
       if (e?.target?.files[0]?.type === 'application/pdf') {
-        var size = parseFloat(e.target.files[0].size / 3145728).toFixed(2);
+        let size = parseFloat(e.target.files[0].size);
 
-        if (size > 2) {
+        if (size > 15000000) {
           setAlert({
             ...alert,
             status: true,
@@ -81,13 +81,14 @@ function ChaptersCreate() {
             [e.target.name]: '',
           });
         } else {
+          setIsLoading(true); // Mengaktifkan loader
           const res = await uploadFile(e.target.files[0]);
-
           setForm({
             ...form,
-            file: res.data.data._id,
-            [e.target.name]: res.data.data.nama,
+            file: res?.data?.data?._id,
+            [e.target.name]: res?.data?.data?.nama,
           });
+          setIsLoading(false); // Menonaktifkan loader
         }
       } else {
         setAlert({
@@ -140,7 +141,6 @@ function ChaptersCreate() {
   const handleDownload = (id) => {
     try {
       setLoading(true);
-      console.log('KLIK');
       getBlob(`/cms/files/${id}`, setLoading);
     } catch (error) {
       console.error(error);

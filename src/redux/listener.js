@@ -12,9 +12,6 @@ function listener() {
   }
 }
 
-// console.log('store listener');
-// console.log(store);
-
 function listen() {
   store.subscribe(listener);
 }

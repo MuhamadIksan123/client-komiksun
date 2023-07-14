@@ -22,16 +22,7 @@ function KNavbar() {
       let { role } = localStorage.getItem('auth')
         ? JSON.parse(localStorage.getItem('auth'))
         : {};
-
-      console.log("localStorage.getItem('auth')");
-      console.log(localStorage.getItem('auth'));
-
-      console.log('Tampilkan role');
-      console.log(role);
-
-      console.log('Tampilkan localStorage');
-      console.log(localStorage);
-
+        
       setRole(role);
     };
     fetchData();

@@ -10,6 +10,7 @@ function SelectBox({
   placeholder,
   handleChange,
   label,
+  disabled,
 }) {
   return (
     <Form.Group className="mb-2">
@@ -21,6 +22,7 @@ function SelectBox({
         options={options}
         onChange={handleChange}
         value={value}
+        isDisabled={disabled}
       />
     </Form.Group>
   );

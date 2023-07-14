@@ -37,20 +37,21 @@ function ChapterCreate() {
     let formData = new FormData();
     formData.append('berkas', file);
     const res = await postData('/cms/files', formData, true);
+    console.log(res);
     return res;
   };
 
   const handleChange = async (e) => {
     if (e?.target?.name === 'document') {
       if (e?.target?.files[0]?.type === 'application/pdf') {
-        var size = parseFloat(e.target.files[0].size / 3145728).toFixed(2);
+        let size = parseFloat(e.target.files[0].size);
 
-        if (size > 30) {
+        if (size > 15000000) {
           setAlert({
             ...alert,
             status: true,
             type: 'danger',
-            message: 'Please select image size less than 30 MB',
+            message: 'Please select image size less than 15 MB',
           });
           setForm({
             ...form,
@@ -58,12 +59,14 @@ function ChapterCreate() {
             [e.target.name]: '',
           });
         } else {
+          setIsLoading(true); // Mengaktifkan loader
           const res = await uploadFile(e.target.files[0]);
           setForm({
             ...form,
-            file: res.data.data._id,
-            [e.target.name]: res.data.data.nama,
+            file: res?.data?.data?._id,
+            [e.target.name]: res?.data?.data?.nama,
           });
+          setIsLoading(false); // Menonaktifkan loader
         }
       } else {
         setAlert({

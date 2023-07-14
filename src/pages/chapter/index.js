@@ -121,11 +121,8 @@ function ChapterPage() {
   const handleDownload = (id) => {
     try {
       setLoading(true);
-      console.log('KLIK');
       getBlob(`/cms/files/${id}`, setLoading);
-
-      // Code untuk mendownload file (misalnya menggunakan fetch atau axios)
-      // ...
+      
     } catch (error) {
       console.error(error);
       setLoading(false);
