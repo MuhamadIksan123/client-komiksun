@@ -46,12 +46,12 @@ function ChapterCreate() {
       if (e?.target?.files[0]?.type === 'application/pdf') {
         let size = parseFloat(e.target.files[0].size);
 
-        if (size > 15000000) {
+        if (size > 9999999) {
           setAlert({
             ...alert,
             status: true,
             type: 'danger',
-            message: 'Please select image size less than 15 MB',
+            message: 'Please select image size less than 10 MB',
           });
           setForm({
             ...form,

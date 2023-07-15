@@ -68,7 +68,7 @@ function ChaptersCreate() {
       if (e?.target?.files[0]?.type === 'application/pdf') {
         let size = parseFloat(e.target.files[0].size);
 
-        if (size > 15000000) {
+        if (size > 9999999) {
           setAlert({
             ...alert,
             status: true,
