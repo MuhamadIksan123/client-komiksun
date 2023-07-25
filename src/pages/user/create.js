@@ -145,12 +145,12 @@ function UserCreate() {
       role: form.role.value,
       lahir: form.lahir,
       statusUser: form.statusUser.value,
-      otp: form.otp,
+      otp: form.file ? form.file : '1234',
       nomor: form.nomor,
       biodata: form.biodata,
       komik: form.komik.map((i) => i),
       // komik: form.komik.map((i) => i.value),
-      image: form.file,
+      image: form.file ? form.file : '644a329c733339974c1e1335',
     };
 
     const res = await postData('/cms/user', payload);

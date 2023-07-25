@@ -49,7 +49,7 @@ export default function UserForm({
               label={'Password'}
               name="password"
               value={form.password}
-              type="text"
+              type="password"
               onChange={handleChange}
             />
           </Col>
@@ -59,7 +59,7 @@ export default function UserForm({
               label={'Konfirmasi Password'}
               name="confirmPassword"
               value={form.confirmPassword}
-              type="text"
+              type="password"
               onChange={handleChange}
             />
           </Col>

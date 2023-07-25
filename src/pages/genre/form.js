@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Col, Form, Row } from 'react-bootstrap';
 import SButton from '../../components/Button';
 import TextInputWithLabel from '../../components/TextInputWithLabel';
 
@@ -12,14 +12,19 @@ export default function CategoriesForm({
 }) {
   return (
     <Form>
-      <TextInputWithLabel
-        placeholder={'Masukan nama genre'}
-        label={'Nama genre'}
-        name="nama"
-        value={form.nama}
-        type="text"
-        onChange={handleChange}
-      />
+      <Row>
+        <Col>
+          <TextInputWithLabel
+            placeholder={'Masukan nama genre'}
+            label={'Nama genre'}
+            name="nama"
+            value={form.nama}
+            type="text"
+            onChange={handleChange}
+          />
+        </Col>
+        <Col></Col>
+      </Row>
       <SButton variant="primary" action={handleSubmit} loading={isLoading}>
         {edit ? 'Ubah' : 'Simpan'}
       </SButton>

@@ -77,7 +77,7 @@ export default function KomikForm({
         <Col>
           <TextInputWithLabel
             placeholder={'Masukan harga komik'}
-            label={'Harga'}
+            label={'Harga (jika harga 0 maka akan dihitung free)'}
             name="price"
             value={form.price}
             type="number"

@@ -77,8 +77,6 @@ function OrderPage() {
           statusTransaksi: status === 'Berhasil' ? 'Ditolak' : 'Berhasil',
         };
         const res = await putData(`/cms/transaksi/${id}/status`, payload);
-
-
         dispatch(
           setNotif(
             true,
@@ -86,7 +84,6 @@ function OrderPage() {
             `Berhasil ubah status komik ${res.data.data.personalDetail.firstName} ${res.data.data.personalDetail.lastName}`
           )
         );
-
         dispatch(fetchTransaksi());
       }
     });

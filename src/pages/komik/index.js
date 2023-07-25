@@ -85,7 +85,7 @@ function KomikPage() {
           setNotif(
             true,
             'success',
-            `Berhasil hapus speaker ${res.data.data.judul}`
+            `Berhasil hapus komik ${res.data.data.judul}`
           )
         );
 
