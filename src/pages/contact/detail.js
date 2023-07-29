@@ -43,14 +43,14 @@ function ContactDetail() {
       <div className="col-lg-8"></div>
       <div className="row mt-4 mb-3">
         <div className="col-lg-8">
-          <div class="card">
-            <h5 class="card-header">Detail Contact</h5>
-            <div class="card-body">
-              <h5 class="card-title">{form.nama}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{form.email}</h6>
-              <p class="card-text">{form.isiPesan}</p>
-              <p class="card-text">
-                <small class="text-muted">{form.date}</small>
+          <div className="card">
+            <h5 className="card-header">Detail Contact</h5>
+            <div className="card-body">
+              <h5 className="card-title">{form.nama}</h5>
+              <h6 className="card-subtitle mb-2 text-muted">{form.email}</h6>
+              <p className="card-text">{form.isiPesan}</p>
+              <p className="card-text">
+                <small className="text-muted">{form.date}</small>
               </p>
               <Button
                 action={() => navigate('/contact')}

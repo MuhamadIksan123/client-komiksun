@@ -150,7 +150,7 @@ function UserCreate() {
       biodata: form.biodata,
       komik: form.komik.map((i) => i),
       // komik: form.komik.map((i) => i.value),
-      image: form.file ? form.file : '644a329c733339974c1e1335',
+      image: form.file ? form.file : '649fa4e9dde518a6eed4b98e',
     };
 
     const res = await postData('/cms/user', payload);
