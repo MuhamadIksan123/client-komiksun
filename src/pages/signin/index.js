@@ -35,15 +35,15 @@ export default function PageSignin() {
     if (token && email && role && refreshToken) {
       // Memanggil fungsi userLogin dengan parameter yang diterima
       dispatch(userLogin(token, role, refreshToken, email));
-    }
 
-    let currentAuth;
-    let previousAuth = currentAuth;
+      let currentAuth;
+      let previousAuth = currentAuth;
 
-    currentAuth = store.getState().auth;
+      currentAuth = store.getState().auth;
 
-    if (currentAuth !== previousAuth) {
-      localStorage.setItem('auth', JSON.stringify(currentAuth));
+      if (currentAuth !== previousAuth) {
+        localStorage.setItem('auth', JSON.stringify(currentAuth));
+      }
     }
   }, [dispatch, searchParams]);
   

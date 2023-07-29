@@ -81,7 +81,7 @@ function OrderPage() {
           setNotif(
             true,
             'success',
-            `Berhasil ubah status komik ${res.data.data.personalDetail.firstName} ${res.data.data.personalDetail.lastName}`
+            `Berhasil ubah status transaksi ${res.data.data.personalDetail.firstName} ${res.data.data.personalDetail.lastName}`
           )
         );
         dispatch(fetchTransaksi());
