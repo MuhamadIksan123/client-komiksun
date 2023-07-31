@@ -70,7 +70,7 @@ function UserCreate() {
         target: { name: 'role', value: res?.data?.data?.role },
         value: res?.data?.data?.role,
       },
-      lahir: moment(res.data.data.lahir).format('YYYY-MM-DDTHH:SS'),
+      lahir: res.data.data.lahir ? moment(res.data.data.lahir).format('YYYY-MM-DDTHH:SS') : "",
       otp: res.data.data.otp,
       nomor: res.data.data.nomor,
       biodata: res.data.data.biodata,
@@ -171,6 +171,8 @@ function UserCreate() {
       komik: form.komik.map((i) => i),
       image: form.file,
     };
+
+    console.log(payload);
 
     const res = await putData(`/cms/user/${userId}`, payload);
     if (res?.data?.data) {
