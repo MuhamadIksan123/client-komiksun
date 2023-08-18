@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { ListGroup } from 'react-bootstrap';
 import BreadCrumb from '../../components/Breadcrumb';
 import { getData } from '../../utils/fetch';
 import { useParams } from 'react-router-dom';
@@ -20,25 +19,32 @@ function UserDetail() {
     otp: '',
     nomor: '',
     biodata: '',
-    komik: '',
+    komik: [],
     avatar: '',
+    nomorRekening: [],
   });
 
   const fetchOneUser = async () => {
-    const res = await getData(`/cms/user/${userId}`);
+    const resUser = await getData(`/cms/user/${userId}`);
+    const resPayments = await getData(`/cms/payment`);
+
+    const foundPayments = resPayments.data.data.filter(
+      (item) => item.vendor === resUser.data.data._id
+    );
 
     setForm({
       ...form,
-      nama: res.data.data.nama,
-      email: res.data.data.email,
-      role: res.data.data.role,
-      lahir: moment(res.data.data.lahir).format('DD-MM-YYYY'),
-      statusUser: res.data.data.statusUser,
-      otp: res.data.data.otp,
-      nomor: res.data.data.nomor,
-      biodata: res.data.data.biodata,
-      komik: res.data.data.komik.map((item) => item.label),
-      avatar: res.data.data.image.nama,
+      nama: resUser.data.data.nama,
+      email: resUser.data.data.email,
+      role: resUser.data.data.role,
+      lahir: moment(resUser.data.data.lahir).format('DD-MM-YYYY'),
+      statusUser: resUser.data.data.statusUser,
+      otp: resUser.data.data.otp,
+      nomor: resUser.data.data.nomor,
+      biodata: resUser.data.data.biodata,
+      komik: resUser.data.data.komik.map((item) => item.label),
+      avatar: resUser.data.data.image.nama,
+      nomorRekening: foundPayments,
     });
   };
 
@@ -51,61 +57,78 @@ function UserDetail() {
     dispatch(fetchListKomiks());
   }, [dispatch]);
 
+  console.log(form);
+
   return (
     <>
-      <div className="container">
+      <div className="container mt-3 mb-5">
         <BreadCrumb
           textSecound={'User'}
           urlSecound={'/user'}
           textThird="Detail"
         />
-        <div className="row mt-4 mb-3">
-          <div className="col-lg-6 col-12 mb-4 justify-content-center align-items-center">
-            <img
-              src={`${config.api_image}/${form.avatar}`}
-              alt="semina"
-              className="img-responsive"
-            />
-          </div>
-          <div className="col-lg-6 col-12">
-            <div className="d-flex flex-column">
-              <ListGroup variant="flush" className="mt-2">
-                <ListGroup.Item>
-                  <b>Nama:</b> <span className="text-muted">{form.nama}</span>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Email:</b>{' '}
-                  <span className="text-muted">{form.email}</span>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Role: </b> <span className="text-muted">{form.role}</span>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Status: </b>{' '}
-                  <span className="text-muted">{form.statusUser}</span>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>OTP: </b> <span className="text-muted">{form.otp}</span>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Tanggal Lahir:</b>{' '}
-                  <span className="text-muted">{form.lahir}</span>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>No Telp:</b>{' '}
-                  <span className="text-muted">
-                    {form.nomor === '-' ? 'Belum Diisi' : form.nomor}
-                  </span>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Komik: </b>
-                  <span className="text-muted">{form.komik === '' ? '' : form.komik.join(',')}</span>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>About:</b>{' '}
-                  <span className="text-muted">{form.biodata}</span>
-                </ListGroup.Item>
-              </ListGroup>
+        <div className="card bg-secondary text-white shadow-lg rounded-lg my-4">
+          <div className="card-body">
+            <div className="row">
+              <div className="col-lg-4">
+                <img
+                  src={`${config.api_image}/${form.avatar}`}
+                  alt="Avatar Pengguna"
+                  className="img-fluid rounded-circle"
+                />
+              </div>
+              <div className="col-lg-8">
+                <h4 className="card-title">{form.nama}</h4>
+                <ul className="list-group">
+                  <li className="list-group-item">
+                    <strong>Email:</strong> {form.email}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Peran:</strong> {form.role}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Tanggal Lahir:</strong> {form.lahir}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Status:</strong> {form.statusUser}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>OTP:</strong> {form.otp}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Nomor Telepon:</strong> {form.nomor}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Komik Dibeli:</strong> {form.komik.join(', ')}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Biodata:</strong>
+                    <div className="text-justify">{form.biodata}</div>{' '}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Nomor rekening:</strong>
+                    <ul className="list-group">
+                      {form.nomorRekening.map((item, index) => (
+                        <li className="list-group-item" key={index}>
+                          <div className="d-flex align-items-center">
+                            <img
+                              src={`${config.api_image}/${item.image.nama}`}
+                              alt="Avatar Pengguna"
+                              className="img-fluid mr-2"
+                              style={{ maxWidth: '50px', marginRight: 20 }}
+                            />
+                            <div>
+                              <span>{item.type}</span>
+                              <br />
+                              <span>{item.nomor}</span>
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

@@ -5,8 +5,8 @@ const Pagination = (props) => {
   const { pages, handlePageClick, page = 1 } = props;
   return (
     <ReactPaginate
-      previousLabel={'previous'}
-      nextLabel={'next'}
+      previousLabel={'Sebelumnya'}
+      nextLabel={'Selanjutnya'}
       breakLabel={
         <span role="button" className="page-link">
           ...

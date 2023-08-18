@@ -23,6 +23,7 @@ function OrderPage() {
 
   const notif = useSelector((state) => state.notif);
   const transaksi = useSelector((state) => state.transaksi);
+  console.log(transaksi);
 
   let [isShowed, setIsShowed] = React.useState(false);
 
@@ -123,6 +124,7 @@ function OrderPage() {
           'Harga',
           'Penerbit',
           'Tanggal Order',
+          'Payment',
           'Status',
           'Aksi',
         ]}
@@ -133,27 +135,12 @@ function OrderPage() {
           'price',
           'penerbit',
           'date',
-          'statusTransaksi',
+          'payment',
+          'status',
         ]}
         pages={transaksi.pages}
         handlePageClick={({ selected }) => dispatch(setPage(selected + 1))}
         detailUrl={access.detail ? `/transaksi/detail` : null}
-        customAction={
-          access.status
-            ? (id, status = '') => {
-                return (
-                  <Button
-                    className={'mx-2'}
-                    variant="primary"
-                    size={'sm'}
-                    action={() => handleChangeStatus(id, status)}
-                  >
-                    Change Status
-                  </Button>
-                );
-              }
-            : null
-        }
       />
     </Container>
   );

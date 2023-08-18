@@ -45,50 +45,48 @@ function KomikDetail() {
   }, []);
 
   return (
-    <div className='container'>
+    <div className="container mt-3 mb-5">
       <BreadCrumb
         textSecound={'Komik'}
         urlSecound={'/komik'}
         textThird="Detail"
       />
-      <div className="row mt-4 mb-3">
-        <div className="col-lg-6 col-12 mb-4 justify-content-center align-items-center">
+      <div className="row mt-4">
+        <div className="col-lg-6 col-12 mb-4">
           <img
             src={`${config.api_image}/${form.avatar}`}
             alt="semina"
-            className="img-responsive"
+            className="img-fluid rounded shadow"
           />
         </div>
         <div className="col-lg-6 col-12">
           <div className="d-flex flex-column">
-            <ListGroup variant="flush" className="mt-2">
+            <h2 className="fw-bold">{form.judul}</h2>
+            <p className="text-muted">By {form.penulis}</p>
+            <ListGroup variant="flush" className="mt-4">
               <ListGroup.Item>
-                <b>Judul:</b> <span className="text-muted">{form.judul}</span>
+                <h5 className="fw-bold">Status:</h5>
+                <p>{form.status}</p>
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>Penulis:</b>{' '}
-                <span className="text-muted">{form.penulis}</span>
+                <h5 className="fw-bold">Jenis:</h5>
+                <p>{form.jenis}</p>
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>Status: </b>{' '}
-                <span className="text-muted">{form.status}</span>
+                <h5 className="fw-bold">Rilis:</h5>
+                <p>{form.rilis}</p>
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>Jenis:</b> <span className="text-muted">{form.jenis}</span>
+                <h5 className="fw-bold">Price:</h5>
+                <p>{form.price === 0 ? 'Free' : `Rp. ${form.price}`}</p>
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>Rilis:</b> <span className="text-muted">{form.rilis}</span>
+                <h5 className="fw-bold">Genre:</h5>
+                <p>{form.genre}</p>
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>Price:</b> <span className="text-muted">{form.price === 0 ? 'Free' : `Rp. ${form.price}`}</span>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Genre: </b>
-                <span className="text-muted">{form.genre}</span>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Sinopsis:</b>{' '}
-                <span className="text-muted">{form.sinopsis}</span>
+                <h5 className="fw-bold">Sinopsis:</h5>
+                <p>{form.sinopsis}</p>
               </ListGroup.Item>
             </ListGroup>
           </div>

@@ -10,33 +10,31 @@ function TransaksiDetail() {
   const { transaksiId } = useParams();
   const [form, setForm] = useState({
     date: '',
-    statusTransaksi: '',
-    image: '',
     firstName: '',
     lastName: '',
     email: '',
-    role: '',
     judul: '',
     price: 0,
-    nomor: '',
+    bank: '',
+    va_number: '',
+    status: '',
   });
 
   const fetchOneTransaksi = async () => {
     const res = await getData(`/cms/transaksi/${transaksiId}`);
+    console.log(res);
 
     setForm({
       ...form,
       date: moment(res.data.data[0].date).format('DD-MM-YYYY, h:mm:ss a'),
-      statusTransaksi: res.data.data[0].statusTransaksi,
-      image: res.data.data[0].image.nama,
       firstName: res.data.data[0].personalDetail.firstName,
       lastName: res.data.data[0].personalDetail.lastName,
       email: res.data.data[0].personalDetail.email,
-      role: res.data.data[0].personalDetail.role,
       judul: res.data.data[0].komik.judul,
       price: res.data.data[0].komik.price,
-      methodPayment: res.data.data[0].payment.type,
-      nomor: res.data.data[0].payment.nomor,
+      bank: res.data.data[0].response_midtrans.va_numbers[0].bank,
+      va_number: res.data.data[0].response_midtrans.va_numbers[0].va_number,
+      status: res.data.data[0].response_midtrans.transaction_status,
     });
   };
   
@@ -45,73 +43,72 @@ function TransaksiDetail() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getStatusBadgeClass = (status) => {
+    if (status === 'settlement') {
+      return 'bg-success';
+    } else if (status === 'pending') {
+      return 'bg-warning text-dark';
+    } else {
+      return 'bg-danger';
+    }
+  };
+
+  const getStatusText = (status) => {
+    if (status === 'settlement') {
+      return 'Sukses';
+    } else if (status === 'pending') {
+      return 'Menunggu';
+    } else {
+      return 'Gagal';
+    }
+  };
+
   return (
-    <div className="container">
+    <div className="container mt-3">
       <BreadCrumb
         textSecound={'Transaksi'}
         urlSecound={'/transaksi'}
         textThird="Detail"
       />
-      <div className="row mt-4 mb-3">
-        <div className="col-lg-6 col-12 mb-4 justify-content-center align-items-center">
-          <img
-            src={`${config.api_image}/${form.image}`}
-            alt="semina"
-            className="img-responsive"
-          />
+      <div className="card bg-light border-0 rounded shadow">
+        <div className="card-header bg-primary text-white py-3">
+          <h3 className="mb-0">Laporan Detail Transaksi</h3>
         </div>
-        <div className="col-lg-6 col-12">
-          <div className="d-flex flex-column">
-            <ol className="list-group list-group-none">
-              <li className="list-group-item d-flex justify-content-between align-items-start">
-                <div className="ms-2 me-auto">
-                  <div className="fw-bold">Tanggal Transaksi</div>
-                  {form.date}
-                </div>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-start">
-                <div className="ms-2 me-auto">
-                  <div className="fw-bold">Status Transaksi</div>
-                  {form.statusTransaksi}
-                </div>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-start">
-                <div className="ms-2 me-auto">
-                  <div className="fw-bold">Nama</div>
-                  {form.firstName} {form.lastName}
-                </div>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-start">
-                <div className="ms-2 me-auto">
-                  <div className="fw-bold">Email</div>
-                  {form.email}
-                </div>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-start">
-                <div className="ms-2 me-auto">
-                  <div className="fw-bold">Judul Komik</div>
-                  {form.judul}
-                </div>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-start">
-                <div className="ms-2 me-auto">
-                  <div className="fw-bold">Harga</div>
-                  Rp, {form.price}
-                </div>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-start">
-                <div className="ms-2 me-auto">
-                  <div className="fw-bold">Metode Pembayaran</div>
-                  {form.methodPayment}
-                </div>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-start">
-                <div className="ms-2 me-auto">
-                  <div className="fw-bold">Nomor Pembayaran</div>
-                  {form.nomor}
-                </div>
-              </li>
-            </ol>
+        <div className="card-body">
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <h4 className="mb-4">Informasi Pelanggan</h4>
+              <p className="mb-2">
+                <strong>Tanggal:</strong> {form.date}
+              </p>
+              <p className="mb-2">
+                <strong>Nama:</strong> {form.firstName} {form.lastName}
+              </p>
+              <p className="mb-2">
+                <strong>Email:</strong> {form.email}
+              </p>
+            </div>
+            <div className="col-md-6">
+              <h4 className="mb-4">Informasi Transaksi</h4>
+              <p className="mb-2">
+                <strong>Judul:</strong> {form.judul}
+              </p>
+              <p className="mb-2">
+                <strong>Harga:</strong> Rp {form.price}
+              </p>
+              <p className="mb-2">
+                <strong>Bank:</strong> {form.bank}
+              </p>
+              <p className="mb-2">
+                <strong>Nomor VA:</strong> {form.va_number}
+              </p>
+              <p>
+                <strong>Status:</strong>{' '}
+                <span className={`badge ${getStatusBadgeClass(form.status)}`}>
+                  {getStatusText(form.status)}
+                </span>{' '}
+              </p>
+            </div>
           </div>
         </div>
       </div>

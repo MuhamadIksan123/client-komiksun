@@ -52,6 +52,7 @@ export const fetchTransaksi = () => {
       };
 
       let res = await debouncedFetchTransaksi('/cms/transaksi', params);
+      console.log(res);
 
       const _temp = [];
       res.data.data.transaksi.forEach((res) => {
@@ -61,8 +62,12 @@ export const fetchTransaksi = () => {
           price: res.historyKomik.price,
           penerbit: res.komik.vendor.nama,
           date: res.date,
-          statusTransaksi: res.statusTransaksi,
-          _id: res._id
+          payment: res.response_midtrans.va_numbers[0].bank,
+          status:
+            res.response_midtrans.transaction_status === 'settlement'
+              ? 'Sukses'
+              : ( res.response_midtrans.transaction_status === 'pending' ? 'Menunggu' : 'Kadaluwarsa'),
+          _id: res._id,
         });
       });
 
