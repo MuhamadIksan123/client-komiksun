@@ -62,7 +62,7 @@ function KomikDetail() {
         <div className="col-lg-6 col-12">
           <div className="d-flex flex-column">
             <h2 className="fw-bold">{form.judul}</h2>
-            <p className="text-muted">By {form.penulis}</p>
+            <p className="text-muted">Oleh {form.penulis}</p>
             <ListGroup variant="flush" className="mt-4">
               <ListGroup.Item>
                 <h5 className="fw-bold">Status:</h5>
@@ -77,7 +77,7 @@ function KomikDetail() {
                 <p>{form.rilis}</p>
               </ListGroup.Item>
               <ListGroup.Item>
-                <h5 className="fw-bold">Price:</h5>
+                <h5 className="fw-bold">Harga:</h5>
                 <p>{form.price === 0 ? 'Free' : `Rp. ${form.price}`}</p>
               </ListGroup.Item>
               <ListGroup.Item>

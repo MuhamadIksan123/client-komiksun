@@ -69,8 +69,8 @@ export default function UserForm({
       <Row>
         <Col>
           <SelectBox
-            label={'Role'}
-            placeholder={'Pilih role'}
+            label={'Peran'}
+            placeholder={'Pilih peran'}
             name="role"
             value={form.role}
             options={rol}
@@ -139,7 +139,7 @@ export default function UserForm({
         <Col>
           <TextInputWithLabel
             placeholder={'Masukan Avatar'}
-            label={'Cover'}
+            label={'Foto Profil'}
             name="avatar"
             // value={form.avatar}
             type="file"

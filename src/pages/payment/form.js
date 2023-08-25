@@ -17,7 +17,7 @@ export default function SpeakersForm({
         <Col>
           <TextInputWithLabel
             placeholder={'Masukan tipe'}
-            label={'Type'}
+            label={'Tipe'}
             name="type"
             value={form.type}
             type="text"

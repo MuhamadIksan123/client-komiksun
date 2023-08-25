@@ -97,9 +97,12 @@ function OrderPage() {
         <Col
           sm={4}
           className="cursor-pointer position-relative"
-          onClick={() => setIsShowed(true)}
+          onMouseDown={() => setIsShowed(true)}
+          onFocus={() => setIsShowed(true)} // Tambahkan ini
+          tabIndex={0} // Tambahkan ini untuk memungkinkan fokus
         >
-          <SearchInput disabled query={displayDate} />
+          <SearchInput disabled query={displayDate} tabIndex={-1} />{' '}
+          {/* tabIndex=-1 untuk menghindari fokus */}
           {isShowed ? (
             <DateRange
               date={transaksi.date}

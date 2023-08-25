@@ -90,30 +90,60 @@ function ChapterPage() {
 
   const handleChangeStatus = (id, status) => {
     Swal.fire({
-      title: 'Apa kamu yakin?',
-      text: '',
-      icon: 'warning',
+      title: 'Ubah Status?',
+      icon: 'info',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Iya, Ubah Status',
+      confirmButtonColor: '#28a745', // Hijau
+      cancelButtonColor: '#ffc107', // Merah
+      showDenyButton: true,
+      denyButtonColor: '#d33', // Kuning
+      confirmButtonText: 'Publikasi',
+      denyButtonText: 'Tolak Publikasi',
       cancelButtonText: 'Batal',
     }).then(async (result) => {
       if (result.isConfirmed) {
         const payload = {
-          statusChapter:
-            status === 'Publikasi' ? 'Tolak Publikasi' : 'Publikasi',
+          statusChapter: 'Publikasi',
         };
         const res = await putData(`/cms/chapter/${id}/status`, payload);
 
-        dispatch(
-          setNotif(
-            true,
-            'success',
-            `Berhasil ubah status chapter ${res.data.data.judul}`
-          )
-        );
+        if (res?.data?.data) {
+          dispatch(
+            setNotif(
+              true,
+              'success',
+              `Berhasil ubah status chapter ${res.data.data.judul} menjadi Publikasi`
+            )
+          );
+        } else {
+          dispatch(setNotif(true, 'danger', `${res.response.data.msg}`));
+        }
+
         dispatch(fetchChapter());
+      } else if (result.isDenied) {
+        const payload = {
+          statusChapter: 'Tolak Publikasi',
+        };
+
+        const res = await putData(`/cms/chapter/${id}/status`, payload);
+
+
+        if (res?.data?.data) {
+          dispatch(
+            setNotif(
+              true,
+              'success',
+              `Berhasil ubah status chapter ${res.data.data.judul} menjadi Tolak Publikasi`
+            )
+          );
+        } else {
+          dispatch(setNotif(true, 'danger', `${res.response.data.msg}`));
+        }
+
+        dispatch(fetchChapter());
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Tidak ada tindakan jika tombol "Batal" ditekan
+        // Anda dapat menambahkan tindakan sesuai kebutuhan di sini
       }
     });
   };
@@ -122,7 +152,6 @@ function ChapterPage() {
     try {
       setLoading(true);
       getBlob(`/cms/files/${id}`, setLoading);
-      
     } catch (error) {
       console.error(error);
       setLoading(false);
@@ -218,7 +247,7 @@ function ChapterPage() {
                     size={'sm'}
                     action={() => handleChangeStatus(id, status)}
                   >
-                    Change Status
+                    Ubah Status
                   </Button>
                 );
               }

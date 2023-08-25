@@ -96,30 +96,59 @@ function KomikPage() {
 
   const handleChangeStatus = (id, status) => {
     Swal.fire({
-      title: 'Apa kamu yakin?',
-      text: '',
-      icon: 'warning',
+      title: 'Ubah Status?',
+      icon: 'info',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Iya, Ubah Status',
+      confirmButtonColor: '#28a745', // Hijau
+      cancelButtonColor: '#ffc107', // Merah
+      showDenyButton: true,
+      denyButtonColor: '#d33', // Kuning
+      confirmButtonText: 'Publikasi',
+      denyButtonText: 'Tolak Publikasi',
       cancelButtonText: 'Batal',
     }).then(async (result) => {
       if (result.isConfirmed) {
         const payload = {
-          statusKomik: status === 'Publikasi' ? 'Tolak Publikasi' : 'Publikasi',
+          statusKomik: 'Publikasi',
         };
         const res = await putData(`/cms/komik/${id}/status`, payload);
 
-        dispatch(
-          setNotif(
-            true,
-            'success',
-            `Berhasil ubah status komik ${res.data.data.judul}`
-          )
-        );
+        if (res?.data?.data) {
+          dispatch(
+            setNotif(
+              true,
+              'success',
+              `Berhasil ubah status komik ${res.data.data.judul} menjadi Publikasi`
+            )
+          );
+        } else {
+          dispatch(setNotif(true, 'danger', `${res.response.data.msg}`));
+        }
 
         dispatch(fetchKomik());
+      } else if (result.isDenied) {
+        const payload = {
+          statusKomik: 'Tolak Publikasi',
+        };
+
+        const res = await putData(`/cms/komik/${id}/status`, payload);
+
+        if (res?.data?.data) {
+          dispatch(
+            setNotif(
+              true,
+              'success',
+              `Berhasil ubah status komik ${res.data.data.judul} menjadi Tolak Publikasi`
+            )
+          );
+        } else {
+          dispatch(setNotif(true, 'danger', `${res.response.data.msg}`));
+        }
+
+        dispatch(fetchKomik());
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Tidak ada tindakan jika tombol "Batal" ditekan
+        // Anda dapat menambahkan tindakan sesuai kebutuhan di sini
       }
     });
   };
@@ -201,7 +230,7 @@ function KomikPage() {
                     size={'sm'}
                     action={() => handleChangeStatus(id, status)}
                   >
-                    Change Status
+                    Ubah Status
                   </Button>
                 );
               }

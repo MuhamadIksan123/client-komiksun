@@ -183,7 +183,7 @@ function User() {
 
       <Table
         status={user.status}
-        thead={['Nama', 'Email', 'Role', 'Status', 'Avatar', 'Aksi']}
+        thead={['Nama', 'Email', 'Peran', 'Status', 'Avatar', 'Aksi']}
         data={user.data}
         tbody={['nama', 'email', 'role', 'statusUser', 'avatar']}
         detailUrl={access.detail ? `/user/detail` : null}
@@ -199,7 +199,7 @@ function User() {
                     size={'sm'}
                     action={() => handleChangeStatus(id, status)}
                   >
-                    Change Status
+                    Ubah Status
                   </Button>
                 );
               }

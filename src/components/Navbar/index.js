@@ -41,14 +41,22 @@ function KNavbar() {
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Dashboard</Navbar.Brand>
+        <Navbar.Brand
+          href="#home"
+          style={{
+            fontFamily: 'Comic Sans MS',
+            fontWeight: 'bold',
+          }}
+        >
+          Komiksun
+        </Navbar.Brand>
         <Nav className="me-auto">
           <NavLink
             role={role}
             roles={accessHome.lihat}
             action={() => navigate('/')}
           >
-            Home
+            Beranda
           </NavLink>
           <NavLink
             role={role}
@@ -90,14 +98,14 @@ function KNavbar() {
             roles={accessContact.lihat}
             action={() => navigate('/contact')}
           >
-            Contact
+            Kontak
           </NavLink>
           <NavLink
             role={role}
             roles={accessTransaksi.lihat}
             action={() => navigate('/transaksi')}
           >
-            Order
+            Transaksi
           </NavLink>
         </Nav>
         <Nav className="justify-content-end">
