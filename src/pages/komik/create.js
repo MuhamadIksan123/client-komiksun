@@ -35,7 +35,7 @@ function KomikCreate() {
   let stat = [
     {
       value: 'Ongoing',
-      label: 'Ongoing',
+      label: 'Berjalan',
       target: { value: 'Ongoing', name: 'status' },
     },
     {
@@ -48,27 +48,22 @@ function KomikCreate() {
   let jenisKomik = [
     {
       value: 'Manga',
-      label: 'Manga',
+      label: 'Manga (Jepang)',
       target: { value: 'Manga', name: 'jenis' },
     },
     {
       value: 'Manhwa',
-      label: 'Manhwa',
+      label: 'Manhwa (Korea)',
       target: { value: 'Manhwa', name: 'jenis' },
     },
     {
       value: 'Manhua',
-      label: 'Manhua',
+      label: 'Manhua (China)',
       target: { value: 'Manhua', name: 'jenis' },
     },
     {
-      value: 'Webtoon',
-      label: 'Webtoon',
-      target: { value: 'Webtoon', name: 'jenis' },
-    },
-    {
       value: 'Komik Indo',
-      label: 'Komik Indo',
+      label: 'Komik Indo (Indonesia)',
       target: { value: 'Komik Indo', name: 'jenis' },
     },
   ];

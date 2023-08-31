@@ -51,7 +51,7 @@ function ChapterCreate() {
             ...alert,
             status: true,
             type: 'danger',
-            message: 'Please select image size less than 10 MB',
+            message: 'Please select image size less than 9.9 MB',
           });
           setForm({
             ...form,
